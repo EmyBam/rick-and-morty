@@ -1,5 +1,7 @@
-export interface CharacterEpisode {
-  name: string;
-  airDate: string;
-  episodeName: string
+export interface Episode {
+  id: number,
+  name: string,
+  airDate: string,
+  episodeName: string,
+  url: string
 }

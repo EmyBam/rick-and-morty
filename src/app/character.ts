@@ -1,3 +1,10 @@
-/**
- * Created by misha on 16.04.20.
- */
+export interface Character {
+  id: number,
+  name: string,
+  gender: string,
+  status: string,
+  episode: [],
+  numberOfEpisodes: number,
+  origin: string,
+  image: string,
+}

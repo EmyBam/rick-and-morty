@@ -1,0 +1,29 @@
+<h3>List of Characters</h3>
+<app-character-search></app-character-search>
+
+<table class="table table-striped characters">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Gender</th>
+    <th scope="col">Number Of Episodes</th>
+    <th scope="col">Origin</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let character of characters">
+    <a class="clickable" routerLink="/details/{{character.id}}">
+      <td class="clickable">
+        {{ character.name }}
+      </td>
+    </a>
+    <td>{{ character.gender }}</td>
+    <td class="clickable" (click)="openModal(character.id)">
+      {{ character.numberOfEpisodes | number }}
+    </td>
+    <td>{{ character.origin }}</td>
+  </tr>
+  </tbody>
+</table>
+
+

@@ -1,0 +1,11 @@
+<div *ngIf="character">
+  <h3>{{character.name | uppercase}}</h3>
+  <img src="{{character.image}}"/>
+  <p>{{character.status}}</p>
+  <p>{{character.gender}}</p>
+  <p>{{character.origin}}</p>
+  <p class="clickable" (click)="openModal(character.id)">
+    {{ character.numberOfEpisodes | number }}
+  </p>
+  <button (click)="goBack()">go back</button>
+</div>

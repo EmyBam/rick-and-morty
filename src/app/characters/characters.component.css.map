@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,WAAY;EACV,OAAO,EAAE,CAAC;;AAGZ,oBAAqB;EACnB,KAAK,EAAE,OAAO;EACd,gBAAgB,EAAE,IAAI;;AAGxB,aAAc;EACZ,eAAe,EAAE,IAAI",
+"sources": ["characters.component.scss"],
+"names": [],
+"file": "characters.component.css"
+}
