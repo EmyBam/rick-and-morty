@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "rick-and-morty": {
@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "rick-and-morty"
+    }
+  },
+  "defaultProject": "rick-and-morty",
+  "cli": {
+    "analytics": "a107880a-aefe-4306-a70d-5d73f68a728f"
+  }
 }

@@ -1,18 +1,21 @@
-import {Injectable} from "@angular/core";
-import {User} from "./user";
+import {Injectable} from '@angular/core';
+import {User} from './user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
+  public user: User;
   public isUserValid: boolean = false;
-  private userCreds = new User('user@email.com', 'rickyPass');
+  private userCreds = new User('User', '12345');
 
  authenticateUser(user): boolean {
-   let emailMatch: boolean = user.email === this.userCreds.email;
-   let passwordMatch: boolean = user.password === this.userCreds.password;
-   return (emailMatch && passwordMatch) ? true : false;
+   const {username, password} = user;
+   const usernameMatch: boolean = username === this.userCreds.username;
+   const passwordMatch: boolean = password === this.userCreds.password;
+   this.user = {username, password};
+   console.log(user);
+   return (usernameMatch && passwordMatch) ? true : false;
  }
 
   constructor() { }

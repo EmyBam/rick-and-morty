@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../user'
-import { UserService } from '../user.service'
+import { User } from '../user';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-user-form',
@@ -16,7 +16,7 @@ export class UserFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(): void {
+  onSubmit(): boolean {
     return this.userService.authenticateUser(this.user);
   }
 }
