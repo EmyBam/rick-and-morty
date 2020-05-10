@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ResponseMapper } from "../response-mapper.service";
-import { Observable, forkJoin } from "rxjs";
-import { Episode } from "../episode";
-import { Character } from "../character";
+import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ResponseMapper } from '../response-mapper.service';
+import { Observable, forkJoin } from 'rxjs';
+import { Episode } from '../episode';
+import { Character } from '../character';
 
 @Component({
   selector: 'app-episode-details',
@@ -27,11 +27,11 @@ export class CharacterEpisodesComponent implements OnInit {
       .subscribe(results => {
         const allEpisodes = results[0];
         const character = results[1];
-        let characterEpisodesSet = new Set;
+        const characterEpisodesSet = new Set;
         character.episode.forEach(url => characterEpisodesSet.add(url));
         this.characterEpisodes = allEpisodes.filter(episode => characterEpisodesSet.has(episode.url));
         this.character = character;
-      })
+      });
   }
 
   constructor(public activeModal: NgbActiveModal,

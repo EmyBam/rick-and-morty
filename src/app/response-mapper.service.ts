@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
-import {HttpService} from "./http.service"
-import {Character} from "./character";
-import {Episode} from "./episode";
-import {map} from "rxjs/operators";
-import {Observable, of} from "rxjs";
+import {Injectable} from '@angular/core';
+import {HttpService} from './http.service';
+import {Character} from './character';
+import {Episode} from './episode';
+import {map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +16,18 @@ export class ResponseMapper {
         map((fetchedCharacters: []) => {
           const formattedResults: [] = this.formatResults(fetchedCharacters);
           const characters: Character[] = formattedResults.map((fetchedCharacter: {}) => {
-            return this.createCharacter(fetchedCharacter)
+            return this.createCharacter(fetchedCharacter);
           });
-          return characters
+          return characters;
         })
-      )
+      );
   }
 
   getCharacter(id: number): Observable<Character> {
     return this.httpService.getCharacter(id)
       .pipe(
         map((fetchedCharacter: {}) => this.createCharacter(fetchedCharacter))
-      )
+      );
   }
 
   getEpisodes(): Observable<Episode[]> {
@@ -36,10 +36,10 @@ export class ResponseMapper {
         map((fetchedEpisodes: []) => {
           const formattedResults: [] = this.formatResults(fetchedEpisodes);
           const episodes: Episode[] = formattedResults.map((fetchedEpisode: {}) => {
-            return this.createEpisode(fetchedEpisode)
+            return this.createEpisode(fetchedEpisode);
           });
           return episodes;
-        }))
+        }));
   }
 
   searchCharacter(term: string) {
@@ -51,20 +51,20 @@ export class ResponseMapper {
         map((fetchedCharacters: []) => {
           const formattedResults: [] = this.formatResults(fetchedCharacters);
           const characters: Character[] = formattedResults.map((fetchedCharacter: {}) => {
-            return this.createCharacter(fetchedCharacter)
+            return this.createCharacter(fetchedCharacter);
           });
-          return characters
+          return characters;
         })
-      )
+      );
   }
 
   private formatResults(fetchedItems) {
     const fetchedResults = fetchedItems.map(fetchedItem => fetchedItem.results);
     const formattedResults: [] = fetchedResults.reduce((acc, val) => [...acc, ...val]);
-    return formattedResults
+    return formattedResults;
   }
 
-  private createCharacter (fetchedCharacter: any): Character {
+  private createCharacter(fetchedCharacter: any): Character {
     const character: Character = {
       id: fetchedCharacter.id,
       name: fetchedCharacter.name,
@@ -76,7 +76,7 @@ export class ResponseMapper {
       image: fetchedCharacter.image
     };
     return character;
-  };
+  }
 
   private createEpisode(fetchedEpisode: any): Episode {
     const episode: Episode = {
@@ -87,7 +87,7 @@ export class ResponseMapper {
       url: fetchedEpisode.url
     };
     return episode;
-  };
+  }
 
   constructor(private httpService: HttpService) { }
 }

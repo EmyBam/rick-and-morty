@@ -1,8 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { ResponseMapper } from "../response-mapper.service";
-import { Character } from "../character";
-import { CharacterEpisodesComponent } from "../character-episodes/character-episodes"
+import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ResponseMapper } from '../response-mapper.service';
+import { Character } from '../character';
+import { CharacterEpisodesComponent } from '../character-episodes/character-episodes';
 
 @Component({
   selector: 'app-characters',
@@ -15,13 +15,13 @@ export class CharactersComponent implements OnInit {
 
   ngOnInit() {
     this.getAllCharacters();
-    console.log("hi")
+    console.log('hi');
   }
 
   getAllCharacters(): void {
     this.responseMapper.getCharacters()
       .subscribe(characters => {
-        this.characters = characters
+        this.characters = characters;
       });
   }
 

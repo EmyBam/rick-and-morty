@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CharactersComponent } from './characters/characters.component'
-import { CharacterDetailsComponent } from './character-details/character-details.component'
+import { CharactersComponent } from './characters/characters.component';
+import { CharacterDetailsComponent } from './character-details/character-details.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 

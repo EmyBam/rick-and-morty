@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ResponseMapper } from "../response-mapper.service";
+import { ResponseMapper } from '../response-mapper.service';
 import { Character } from '../character';
-import { CharacterEpisodesComponent } from "../character-episodes/character-episodes"
+import { CharacterEpisodesComponent } from '../character-episodes/character-episodes'
 
 @Component({
   selector: 'app-character-details',

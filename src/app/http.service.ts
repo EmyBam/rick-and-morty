@@ -1,13 +1,19 @@
-import {Injectable} from "@angular/core";
-import {Character} from "./character";
-import {HttpClient} from "@angular/common/http";
-import {catchError, tap, mergeMap} from "rxjs/operators";
-import {Observable, of, forkJoin} from "rxjs";
+import {Injectable} from '@angular/core';
+import {Character} from './character';
+import {HttpClient} from '@angular/common/http';
+import {catchError, tap, mergeMap} from 'rxjs/operators';
+import {Observable, of, forkJoin} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
+
+  constructor(private http: HttpClient) { }
+
+  // todo: how to handle errors?
+
+  private baseUrl = 'https://rickandmortyapi.com/api/';
 
 
   getCharacters(): Observable<Character[]> {
@@ -24,7 +30,7 @@ export class HttpService {
       .pipe(
         tap(_ => console.log('fetched character')),
         catchError(this.handleError<Character>('getCharacter'))
-      )
+      );
   }
 
   getEpisodes(): Observable<any> {
@@ -48,28 +54,24 @@ export class HttpService {
 
   private getAllPagesData(response: any, endpoint: string): Observable<[]> {
     const pagesNumber: number = response.info.pages;
-    let allPages: [] = [];
-    for (let pageIndex: number = 1; pageIndex <= pagesNumber; pageIndex++) {
-      let page: Observable<[]> = this.http.get<[]>(`${this.baseUrl}${endpoint}?page=${pageIndex}`)
+    const allPages: [] = [];
+    for (let pageIndex = 1; pageIndex <= pagesNumber; pageIndex++) {
+      const page: Observable<[]> = this.http.get<[]>(`${this.baseUrl}${endpoint}?page=${pageIndex}`)
         .pipe(
           tap(_ => console.log(`fetched ${endpoint} on page ${pageIndex}`)),
           catchError(this.handleError<[]>(`can't get ${endpoint} on page ${pageIndex}`, []))
         );
+      // @ts-ignore
       allPages.push(page);
     }
+    // @ts-ignore
     return forkJoin(allPages);
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
       return of(result as T);
     };
   }
-
-  //todo: how to handle errors?
-
-  private baseUrl = 'https://rickandmortyapi.com/api/';
-
-  constructor(private http: HttpClient) { }
 }
