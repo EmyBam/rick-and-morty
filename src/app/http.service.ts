@@ -4,6 +4,13 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, tap, mergeMap} from 'rxjs/operators';
 import {Observable, of, forkJoin} from 'rxjs';
 
+// todo:  create an interface for data I'll set from server.
+// todo: split for two services for character anf episodes.
+// todo: what to do with mapper?
+// todo: how to handle errors?
+// todo: spinners
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +18,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  // todo: how to handle errors?
+
 
   private baseUrl = 'https://rickandmortyapi.com/api/';
 

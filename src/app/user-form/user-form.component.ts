@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { User } from '../user';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -9,7 +9,8 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./user-form.component.scss']
 })
 export class UserFormComponent implements OnInit {
-  constructor(private authService: AuthService ) { }
+  constructor(private authService: AuthService,
+              public router: Router) { }
 
   ngOnInit(): void {
   }
@@ -20,8 +21,12 @@ export class UserFormComponent implements OnInit {
    };
    const username = form.value.username;
    const password = form.value.password;
-   this.authService.login(username, password);
-   console.log(this.authService.user);
+   this.authService.login(username, password)
+     .subscribe(() => {
+         const redirectUrl = '/characters';
+         this.router.navigate([redirectUrl]);
+       }
+     );
    form.reset();
   }
 }
