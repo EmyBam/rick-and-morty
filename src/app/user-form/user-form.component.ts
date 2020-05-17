@@ -18,13 +18,13 @@ export class UserFormComponent implements OnInit {
   onSubmit(form: NgForm) {
    if (!form.valid) {
      return;
-   };
+   }
    const username = form.value.username;
    const password = form.value.password;
    this.authService.login(username, password)
      .subscribe(() => {
-         const redirectUrl = '/characters';
-         this.router.navigate([redirectUrl]);
+       const redirectUrl = '/characters';
+       this.router.navigate([redirectUrl]);
        }
      );
    form.reset();

@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-xs-12 col-md-10">
+    <h1>{{title}}</h1>
+  </div>
+  <div class="col-xs-12 col-md-2" *ngIf="isAuthenticated">
+    <button class="btn btn-primary"
+            type="submit"
+            (click)="logout()"
+    >
+      Log out
+    </button>
+  </div>
+</div>

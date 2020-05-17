@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from './user.model';
-import {Observable, of, Subject, throwError} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 
 const REGISTERED_USER_CREDENTIALS = {
@@ -19,7 +19,7 @@ interface AuthResponseData {
 })
 export class AuthService {
   constructor() { }
-  user = new Subject<User>();
+  user = new BehaviorSubject<User>(null);
 
   login(username: string, password: string): Observable<AuthResponseData> {
       const usernameMatch: boolean = username === REGISTERED_USER_CREDENTIALS.username;
@@ -39,8 +39,7 @@ export class AuthService {
           })
         );
   }
-
   logout() {
-    this.user = null;
+    this.user.next(null);
   }
 }

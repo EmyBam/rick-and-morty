@@ -12,6 +12,7 @@ import { CharacterEpisodesComponent } from './character-episodes/character-episo
 import { CharacterSearchComponent } from './character-search/character-search.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     CharacterSearchComponent,
     UserFormComponent,
     PageNotFoundComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
