@@ -13,6 +13,7 @@ import { CharacterSearchComponent } from './character-search/character-search.co
 import { UserFormComponent } from './user-form/user-form.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { HeaderComponent } from './header/header.component';
     UserFormComponent,
     PageNotFoundComponent,
     HeaderComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,

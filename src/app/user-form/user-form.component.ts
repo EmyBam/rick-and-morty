@@ -8,25 +8,35 @@ import { AuthService } from '../auth.service';
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss']
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent {
   constructor(private authService: AuthService,
               public router: Router) { }
 
-  ngOnInit(): void {
-  }
+  isLoading = false;
+  error: string = null;
 
   onSubmit(form: NgForm) {
-   if (!form.valid) {
-     return;
-   }
-   const username = form.value.username;
-   const password = form.value.password;
-   this.authService.login(username, password)
-     .subscribe(() => {
-       const redirectUrl = '/characters';
-       this.router.navigate([redirectUrl]);
-       }
-     );
-   form.reset();
+    this.error = null;
+    if (!form.valid) {
+      return;
+    }
+    const username = form.value.username;
+    const password = form.value.password;
+    this.isLoading = true;
+    this.authService.authenticateUser(username, password).subscribe(
+      resData => {
+        console.log(resData);
+        if (!resData.isRegistered) {
+          this.error = resData.error;
+          this.isLoading = false;
+        } else {
+          const redirectUrl = '/characters';
+          this.router.navigate([redirectUrl]);
+          this.isLoading = false;
+        }
+      },
+    );
+    form.reset();
   }
 }
+
