@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
@@ -11,18 +11,20 @@ import {Router} from '@angular/router';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuthenticated = false;
-  private userSub: Subscription;
+  private tokenSub: Subscription;
 
   title = 'Rick and Morty Characters';
 
   ngOnInit() {
-    this.userSub = this.authService.user.subscribe(user => {
-      this.isAuthenticated = !!user;
-    });
+    this.tokenSub = this.authService.isTokenPresents.subscribe(
+      isTokenPresent => {
+        this.isAuthenticated = isTokenPresent;
+        console.log(this.isAuthenticated);
+      });
   }
 
   ngOnDestroy() {
-   this.userSub.unsubscribe();
+    this.tokenSub.unsubscribe();
   }
 
   logout() {
@@ -30,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const redirectUrl = '/login';
     this.router.navigate([redirectUrl]);
   }
+
   constructor(private authService: AuthService,
               public router: Router) {
   }

@@ -17,7 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: UserFormComponent
+    component: UserFormComponent,
+   // canActivate: [AuthGuard]
   },
   {
     path: 'details/:id',

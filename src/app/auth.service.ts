@@ -1,13 +1,14 @@
-import {Injectable} from '@angular/core';
-import {User} from './user.model';
-import {BehaviorSubject, Observable, of, Subject, throwError} from 'rxjs';
-import {tap, delay, catchError} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { tap, delay } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 const REGISTERED_USER_CREDENTIALS = {
   username: 'User',
   password: '123456'
 };
+
+const TOKEN = 'some_token';
 
 interface AuthResponseData {
   username: string;
@@ -19,11 +20,8 @@ interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) {
-  }
-
-  user = new BehaviorSubject<User>(null);
-  token = 'some_token';
+  constructor(private cookieService: CookieService) { }
+  isTokenPresents = new BehaviorSubject<boolean>(this.checkToken());
 
   authenticateUser(username: string, password: string): Observable<AuthResponseData> {
     const usernameMatch: boolean = username === REGISTERED_USER_CREDENTIALS.username;
@@ -35,15 +33,19 @@ export class AuthService {
         delay(1000),
         tap(resData => {
           if (resData.isRegistered) {
-            const token = this.token;
-            const user = new User(username, token);
-            this.user.next(user);
+            this.cookieService.set('token', TOKEN);
+            this.isTokenPresents.next(true);
           };
         })
       );
   }
 
+  checkToken(): boolean  {
+    return this.cookieService.check('token');
+  }
+
   logout() {
-    this.user.next(null);
+    this.cookieService.delete('token', TOKEN);
+    this.isTokenPresents.next(false);
   }
 }

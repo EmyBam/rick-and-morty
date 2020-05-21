@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { CookieService } from 'ngx-cookie-service';
 import { AppComponent } from './app.component';
 import { CharactersComponent } from './characters/characters.component';
 import { CharacterDetailsComponent } from './character-details/character-details.component';
@@ -35,7 +36,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     FormsModule
   ],
   entryComponents: [ CharacterEpisodesComponent ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ CookieService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

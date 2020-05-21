@@ -25,7 +25,6 @@ export class UserFormComponent {
     this.isLoading = true;
     this.authService.authenticateUser(username, password).subscribe(
       resData => {
-        console.log(resData);
         if (!resData.isRegistered) {
           this.error = resData.error;
           this.isLoading = false;
