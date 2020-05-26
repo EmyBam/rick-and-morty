@@ -1,7 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {AuthService} from '../auth.service';
-import {Router} from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {BehaviorSubject, Subscription} from 'rxjs';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header',
@@ -10,16 +11,20 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  constructor(private authService: AuthService,
+              private cookieService: CookieService,
+              public router: Router) {
+  }
+
   isAuthenticated = false;
   private tokenSub: Subscription;
 
-  title = 'Rick and Morty Characters';
+  title = 'Rick and Morty';
 
   ngOnInit() {
     this.tokenSub = this.authService.isTokenPresents.subscribe(
       isTokenPresent => {
         this.isAuthenticated = isTokenPresent;
-        console.log(this.isAuthenticated);
       });
   }
 
@@ -31,9 +36,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout();
     const redirectUrl = '/login';
     this.router.navigate([redirectUrl]);
-  }
-
-  constructor(private authService: AuthService,
-              public router: Router) {
   }
 }
