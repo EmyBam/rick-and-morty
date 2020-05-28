@@ -10,8 +10,8 @@ import {Observable, of} from 'rxjs';
 })
 export class ResponseMapper {
 
-  getCharacters(): Observable<Character[]> {
-    return this.httpService.getCharacters()
+  getCharacters(page): Observable<Character[]> {
+    return this.httpService.getCharacters(page)
       .pipe(
         map((fetchedCharacters: []) => {
           const formattedResults: [] = this.formatResults(fetchedCharacters);
@@ -42,21 +42,21 @@ export class ResponseMapper {
         }));
   }
 
-  searchCharacter(term: string) {
-    if (!term.trim()) {
-      return of([]);
-    }
-    return this.httpService.searchCharacter(term)
-      .pipe(
-        map((fetchedCharacters: []) => {
-          const formattedResults: [] = this.formatResults(fetchedCharacters);
-          const characters: Character[] = formattedResults.map((fetchedCharacter: {}) => {
-            return this.createCharacter(fetchedCharacter);
-          });
-          return characters;
-        })
-      );
-  }
+  // searchCharacter(term: string) {
+  //   if (!term.trim()) {
+  //     return of([]);
+  //   }
+  //   return this.httpService.searchCharacter(term)
+  //     .pipe(
+  //       map((fetchedCharacters: []) => {
+  //         const formattedResults: [] = this.formatResults(fetchedCharacters);
+  //         const characters: Character[] = formattedResults.map((fetchedCharacter: {}) => {
+  //           return this.createCharacter(fetchedCharacter);
+  //         });
+  //         return characters;
+  //       })
+  //     );
+  // }
 
   private formatResults(fetchedItems) {
     const fetchedResults = fetchedItems.map(fetchedItem => fetchedItem.results);

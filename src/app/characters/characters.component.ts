@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResponseMapper } from '../response-mapper.service';
 import { Character } from '../character';
 import { CharacterEpisodesComponent } from '../character-episodes/character-episodes';
+import {HttpService} from "../http.service";
 
 @Component({
   selector: 'app-characters',
@@ -12,13 +13,26 @@ import { CharacterEpisodesComponent } from '../character-episodes/character-epis
 export class CharactersComponent implements OnInit {
 
   characters: Character[];
+  page = 1;
+  pageSize: number;
+  collectionSize: number;
 
   ngOnInit() {
+    this.getCollectionSize();
     this.getAllCharacters();
   }
 
+  getCollectionSize() {
+    return this.httpService.getCollectionInfo().subscribe(
+      res => {
+        this.collectionSize = res.collectionSize;
+        this.pageSize = res.pageSize;
+      }
+    );
+  }
+
   getAllCharacters(): void {
-    this.responseMapper.getCharacters()
+    this.responseMapper.getCharacters(this.page)
       .subscribe(characters => {
         this.characters = characters;
       });
@@ -30,7 +44,11 @@ export class CharactersComponent implements OnInit {
   }
 
   constructor(private responseMapper: ResponseMapper,
+              private httpService: HttpService,
               private modalService: NgbModal) {
   }
 
+  onPageChange(page) {
+    this.page = page;
+  }
 }

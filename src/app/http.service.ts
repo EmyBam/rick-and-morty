@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Character} from './character';
 import {HttpClient} from '@angular/common/http';
-import {catchError, tap, mergeMap} from 'rxjs/operators';
+import {catchError, tap, mergeMap, map} from 'rxjs/operators';
 import {Observable, of, forkJoin} from 'rxjs';
 
 // todo:  create an interface for data I'll set from server.
@@ -23,8 +23,21 @@ export class HttpService {
   private baseUrl = 'https://rickandmortyapi.com/api/';
 
 
-  getCharacters(): Observable<Character[]> {
+  getCollectionInfo() {
     return this.http.get(`${this.baseUrl}character`)
+      .pipe(
+        tap(_ => console.log('fetched character info')),
+        catchError(this.handleError<[]>('getCollectionSize', [])),
+        map(({info}: any) => {
+          return {
+            collectionSize: info.count,
+            pageSize: Math.ceil(info.count / info.pages / 10) * 10};
+        }
+      ));
+  }
+
+  getCharacters(page): Observable<any> {
+    return this.http.get(`${this.baseUrl}character?page=${page}`)
       .pipe(
         tap(_ => console.log('fetched all characters')),
         catchError(this.handleError<[]>('getCharacters', [])),
@@ -49,15 +62,15 @@ export class HttpService {
       );
   }
 
-  searchCharacter(term: string): Observable<Character[]> {
-    return this.getCharacters()
-      .pipe(
-        tap(response => response.length ?
-          console.log(`found characters matching "${term}"`) :
-          console.log(`no characters matching "${term}"`)),
-        catchError(this.handleError<[]>('searchCharacters', []))
-      );
-  }
+  // searchCharacter(term: string): Observable<Character[]> {
+  //   return this.getCharacters()
+  //     .pipe(
+  //       tap(response => response.length ?
+  //         console.log(`found characters matching "${term}"`) :
+  //         console.log(`no characters matching "${term}"`)),
+  //       catchError(this.handleError<[]>('searchCharacters', []))
+  //     );
+  // }
 
   private getAllPagesData(response: any, endpoint: string): Observable<[]> {
     const pagesNumber: number = response.info.pages;

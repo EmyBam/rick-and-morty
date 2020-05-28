@@ -22,15 +22,15 @@ export class CharacterSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setCharacters();
+  //  this.setCharacters();
   }
 
-  setCharacters(): void {
-    this.characters = this.searchTerms
-      .pipe(
-        debounceTime(250),
-        distinctUntilChanged(),
-        switchMap((term: string) => this.responseMapper.searchCharacter(term)),
-      );
-  }
+  // setCharacters(): void {
+  //   this.characters = this.searchTerms
+  //     .pipe(
+  //       debounceTime(250),
+  //       distinctUntilChanged(),
+  //       switchMap((term: string) => this.responseMapper.searchCharacter(term)),
+  //     );
+  // }
 }
