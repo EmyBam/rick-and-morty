@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {ResponseMapper} from '../response-mapper.service';
-import {Character} from '../character';
+import {ResponseMapper} from '../services/response-mapper.service';
+import {CharacterInterface} from '../interfaces/character.interface';
 
 @Component({
   selector: 'app-character-search',
@@ -11,7 +11,7 @@ import {Character} from '../character';
 })
 export class CharacterSearchComponent implements OnInit {
 
-  characters: Observable<Character[]>;
+  characters: Observable<CharacterInterface[]>;
   private searchTerms = new Subject<string>();
 
   constructor(private responseMapper: ResponseMapper) {

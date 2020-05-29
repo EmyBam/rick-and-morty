@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ResponseMapper } from '../response-mapper.service';
-import { Character } from '../character';
+import { ResponseMapper } from '../services/response-mapper.service';
+import { Character, CollectionInfo } from '../interfaces/character.interface';
 import { CharacterEpisodesComponent } from '../character-episodes/character-episodes';
-import {HttpService} from "../http.service";
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-characters',
@@ -12,28 +12,35 @@ import {HttpService} from "../http.service";
 })
 export class CharactersComponent implements OnInit {
 
+  constructor(private responseMapper: ResponseMapper,
+              private httpService: HttpService,
+              private modalService: NgbModal) {
+  }
+
   characters: Character[];
   page = 1;
   pageSize: number;
   collectionSize: number;
 
   ngOnInit() {
-    this.getCollectionSize();
-    this.getAllCharacters();
+    this.getCollectionInfo();
+    this.getCharacters();
   }
 
-  getCollectionSize() {
-    return this.httpService.getCollectionInfo().subscribe(
-      res => {
-        this.collectionSize = res.collectionSize;
-        this.pageSize = res.pageSize;
+  getCollectionInfo(): void {
+    this.responseMapper.getCollectionInfo().subscribe(
+      collectionInfo => {
+        console.log(collectionInfo);
+        this.pageSize = collectionInfo.pageSize;
+        this.collectionSize = collectionInfo.collectionSize;
       }
     );
   }
 
-  getAllCharacters(): void {
+  getCharacters(): void {
     this.responseMapper.getCharacters(this.page)
       .subscribe(characters => {
+        console.log(characters);
         this.characters = characters;
       });
   }
@@ -43,12 +50,8 @@ export class CharactersComponent implements OnInit {
     modalRef.componentInstance.characterId = id;
   }
 
-  constructor(private responseMapper: ResponseMapper,
-              private httpService: HttpService,
-              private modalService: NgbModal) {
-  }
-
   onPageChange(page) {
     this.page = page;
+    this.getCharacters();
   }
 }

@@ -12,7 +12,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let character of characters | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+    <tr *ngFor="let character of characters">
       <a class="clickable" routerLink="/details/{{character.id}}">
         <td class="clickable">
           {{ character.name }}
@@ -28,7 +28,7 @@
   </table>
   <div class="d-flex justify-content-between p-2">
     <ngb-pagination
-      [collectionSize]="characters.length"
+      [collectionSize]="collectionSize"
       [(page)]="page"
       [pageSize]="pageSize"
       [maxSize]="5"

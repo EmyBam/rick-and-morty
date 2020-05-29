@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ResponseMapper } from '../response-mapper.service';
-import { Character } from '../character';
+import { ResponseMapper } from '../services/response-mapper.service';
+import { CharacterInterface } from '../interfaces/character.interface';
 import { CharacterEpisodesComponent } from '../character-episodes/character-episodes'
 
 @Component({
@@ -14,7 +14,7 @@ import { CharacterEpisodesComponent } from '../character-episodes/character-epis
 })
 export class CharacterDetailsComponent implements OnInit {
 
-  @Input() character: Character;
+  @Input() character: CharacterInterface;
 
   ngOnInit(): void {
     this.getCharacter();

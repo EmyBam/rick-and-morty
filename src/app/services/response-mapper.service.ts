@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
-import {Character} from './character';
-import {Episode} from './episode';
+import {Character, CharacterResponse, CollectionInfo} from '../interfaces/character.interface';
+import {Episode} from '../interfaces/episode';
 import {map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
@@ -13,9 +13,8 @@ export class ResponseMapper {
   getCharacters(page): Observable<Character[]> {
     return this.httpService.getCharacters(page)
       .pipe(
-        map((fetchedCharacters: []) => {
-          const formattedResults: [] = this.formatResults(fetchedCharacters);
-          const characters: Character[] = formattedResults.map((fetchedCharacter: {}) => {
+        map(({results}) => {
+          const characters: Character[] = results.map((fetchedCharacter: {}) => {
             return this.createCharacter(fetchedCharacter);
           });
           return characters;
@@ -26,8 +25,21 @@ export class ResponseMapper {
   getCharacter(id: number): Observable<Character> {
     return this.httpService.getCharacter(id)
       .pipe(
-        map((fetchedCharacter: {}) => this.createCharacter(fetchedCharacter))
+        map((fetchedCharacter: CharacterResponse) => this.createCharacter(fetchedCharacter))
       );
+  }
+
+  getCollectionInfo(): Observable<CollectionInfo> {
+    return this.httpService.getCollectionInfo().pipe(
+      map((response) => {
+          const pageSize = response.results.length;
+          return {
+            collectionSize: response.info.count,
+            pageSize,
+          };
+        }
+      )
+    );
   }
 
   getEpisodes(): Observable<Episode[]> {
