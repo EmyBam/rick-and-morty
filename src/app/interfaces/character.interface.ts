@@ -3,7 +3,7 @@ export interface Character {
   name: string;
   gender: string;
   status: string;
-  episode: [];
+  episode: string[];
   numberOfEpisodes: number;
   origin: string;
   image: string;
@@ -22,7 +22,7 @@ export interface CharactersResponse {
     prev: string;
   };
   results: {
-    id: 2;
+    id: number;
     name: string;
     status: string;
     species: string;
@@ -43,8 +43,8 @@ export interface CharactersResponse {
   }[];
 }
 
-export interface CharacterResponse {
-  id: 2;
+export interface FetchedCharacter {
+  id: number;
   name: string;
   status: string;
   species: string;

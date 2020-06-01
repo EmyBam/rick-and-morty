@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
-import {CharactersResponse, CharacterResponse} from '../interfaces/character.interface';
-import {HttpClient} from '@angular/common/http';
-import {catchError, tap, mergeMap, map} from 'rxjs/operators';
-import {Observable, of, forkJoin} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { CharactersResponse, FetchedCharacter } from '../interfaces/character.interface';
+import { EpisodesResponse, FetchedEpisode } from '../interfaces/episode.interface';
+import { HttpClient } from '@angular/common/http';
+import { catchError, tap, mergeMap, map } from 'rxjs/operators';
+import { Observable, of, forkJoin } from 'rxjs';
 
 // todo:  create an interface for data I'll set from server.
 // todo: how to handle errors?
@@ -31,11 +32,11 @@ export class HttpService {
       );
   }
 
-  getCharacter(id: number): Observable<CharacterResponse> {
-    return this.http.get<CharacterResponse>(`${this.baseUrl}character/${id}`)
+  getCharacter(id: number): Observable<FetchedCharacter> {
+    return this.http.get<FetchedCharacter>(`${this.baseUrl}character/${id}`)
       .pipe(
         tap(_ => console.log('fetched character')),
-        catchError(this.handleError<CharacterResponse>('getCharacter'))
+        catchError(this.handleError<FetchedCharacter>('getCharacter'))
       );
   }
 
@@ -49,29 +50,28 @@ export class HttpService {
   //     );
   // }
 
-  getEpisodes(): Observable<any> {
-    return this.http.get(`${this.baseUrl}episode`)
+  getEpisodes() {
+    return this.http.get<EpisodesResponse>(`${this.baseUrl}episode`)
       .pipe(
         tap(_ => console.log('fetched all episodes')),
-        catchError(this.handleError<[]>('getEpisodes', [])),
-        mergeMap((response: any) => this.getAllPagesData(response, 'episode'))
+        catchError(this.handleError<EpisodesResponse>('getEpisodes', )),
+        mergeMap(response => {
+            const pageCount = response.info.pages;
+            const pages = [];
+            for (let i = 1; i <= pageCount; i++) { pages.push(i); }
+            return forkJoin(pages.map(pageIndex =>
+              this.getOnePageEpisode(pageIndex)));
+          }
+        )
       );
   }
 
-  private getAllPagesData(response: any, endpoint: string): Observable<[]> {
-    const pagesNumber: number = response.info.pages;
-    const allPages: [] = [];
-    for (let pageIndex = 1; pageIndex <= pagesNumber; pageIndex++) {
-      const page: Observable<[]> = this.http.get<[]>(`${this.baseUrl}${endpoint}?page=${pageIndex}`)
-        .pipe(
-          tap(_ => console.log(`fetched ${endpoint} on page ${pageIndex}`)),
-          catchError(this.handleError<[]>(`can't get ${endpoint} on page ${pageIndex}`, []))
-        );
-      // @ts-ignore
-      allPages.push(page);
-    }
-    // @ts-ignore
-    return forkJoin(allPages);
+  private getOnePageEpisode(pageIndex): Observable<EpisodesResponse> {
+    return this.http.get<EpisodesResponse>(`${this.baseUrl}episode?page=${pageIndex}`)
+      .pipe(
+        tap(_ => console.log(`fetched episodes from page ${pageIndex}`)),
+        catchError(this.handleError<EpisodesResponse>('getEpisodes', ))
+      );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http.service';
-import {Character, CharacterResponse, CollectionInfo} from '../interfaces/character.interface';
-import {Episode} from '../interfaces/episode';
+import {Character, FetchedCharacter, CollectionInfo} from '../interfaces/character.interface';
+import {Episode, EpisodesResponse, FetchedEpisode} from '../interfaces/episode.interface';
 import {map} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 
@@ -13,8 +13,8 @@ export class ResponseMapper {
   getCharacters(page): Observable<Character[]> {
     return this.httpService.getCharacters(page)
       .pipe(
-        map(({results}) => {
-          const characters: Character[] = results.map((fetchedCharacter: {}) => {
+        map(({results} ) => {
+          const characters: Character[] = results.map((fetchedCharacter: FetchedCharacter) => {
             return this.createCharacter(fetchedCharacter);
           });
           return characters;
@@ -25,7 +25,7 @@ export class ResponseMapper {
   getCharacter(id: number): Observable<Character> {
     return this.httpService.getCharacter(id)
       .pipe(
-        map((fetchedCharacter: CharacterResponse) => this.createCharacter(fetchedCharacter))
+        map((fetchedCharacter: FetchedCharacter) => this.createCharacter(fetchedCharacter))
       );
   }
 
@@ -45,9 +45,9 @@ export class ResponseMapper {
   getEpisodes(): Observable<Episode[]> {
     return this.httpService.getEpisodes()
       .pipe(
-        map((fetchedEpisodes: []) => {
-          const formattedResults: [] = this.formatResults(fetchedEpisodes);
-          const episodes: Episode[] = formattedResults.map((fetchedEpisode: {}) => {
+        map(fetchedEpisodes => {
+          const formattedResults: FetchedEpisode[] = this.formatResults(fetchedEpisodes);
+          const episodes: Episode[] = formattedResults.map((fetchedEpisode: FetchedEpisode) => {
             return this.createEpisode(fetchedEpisode);
           });
           return episodes;
@@ -70,13 +70,13 @@ export class ResponseMapper {
   //     );
   // }
 
-  private formatResults(fetchedItems) {
+  private formatResults(fetchedItems): FetchedEpisode[] {
     const fetchedResults = fetchedItems.map(fetchedItem => fetchedItem.results);
     const formattedResults: [] = fetchedResults.reduce((acc, val) => [...acc, ...val]);
     return formattedResults;
   }
 
-  private createCharacter(fetchedCharacter: any): Character {
+  private createCharacter(fetchedCharacter: FetchedCharacter): Character {
     const character: Character = {
       id: fetchedCharacter.id,
       name: fetchedCharacter.name,
@@ -90,7 +90,7 @@ export class ResponseMapper {
     return character;
   }
 
-  private createEpisode(fetchedEpisode: any): Episode {
+  private createEpisode(fetchedEpisode: FetchedEpisode): Episode {
     const episode: Episode = {
       id: fetchedEpisode.id,
       name: fetchedEpisode.name,

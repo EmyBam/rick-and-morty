@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ResponseMapper } from '../services/response-mapper.service';
-import { CharacterInterface } from '../interfaces/character.interface';
+import { Character } from '../interfaces/character.interface';
 import { CharacterEpisodesComponent } from '../character-episodes/character-episodes'
 
 @Component({
@@ -14,7 +14,7 @@ import { CharacterEpisodesComponent } from '../character-episodes/character-epis
 })
 export class CharacterDetailsComponent implements OnInit {
 
-  @Input() character: CharacterInterface;
+  @Input() character: Character;
 
   ngOnInit(): void {
     this.getCharacter();

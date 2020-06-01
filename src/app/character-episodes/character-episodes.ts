@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResponseMapper } from '../services/response-mapper.service';
 import { Observable, forkJoin } from 'rxjs';
-import { Episode } from '../interfaces/episode';
-import { CharacterInterface } from '../interfaces/character.interface';
+import { Episode } from '../interfaces/episode.interface';
+import { Character } from '../interfaces/character.interface';
 
 @Component({
   selector: 'app-episode-details',
@@ -13,7 +13,7 @@ import { CharacterInterface } from '../interfaces/character.interface';
 export class CharacterEpisodesComponent implements OnInit {
 
   @Input() characterId;
-  character: CharacterInterface;
+  character: Character;
   characterEpisodes: Episode[];
 
   ngOnInit() {
@@ -21,13 +21,14 @@ export class CharacterEpisodesComponent implements OnInit {
   }
 
   getCharacterEpisodes(): void {
-    const allEpisodes: Observable<Episode[]> = this.responseMapper.getEpisodes();
-    const character: Observable<CharacterInterface> = this.responseMapper.getCharacter(this.characterId);
-    forkJoin([allEpisodes, character])
+    forkJoin([
+      this.responseMapper.getEpisodes(),
+      this.responseMapper.getCharacter(this.characterId)
+    ])
       .subscribe(results => {
         const allEpisodes = results[0];
         const character = results[1];
-        const characterEpisodesSet = new Set;
+        const characterEpisodesSet = new Set();
         character.episode.forEach(url => characterEpisodesSet.add(url));
         this.characterEpisodes = allEpisodes.filter(episode => characterEpisodesSet.has(episode.url));
         this.character = character;
