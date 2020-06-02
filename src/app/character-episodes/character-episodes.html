@@ -6,7 +6,7 @@
     </button>
   </div>
 </div>
-<div *ngIf="characterEpisodes">
+<div *ngIf="characterEpisodes && collectionSize">
   <div class="modal-body">
     <table class="table table-striped">
       <thead>
@@ -17,13 +17,25 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let characterEpisode of characterEpisodes">
+      <tr
+        *ngFor="let characterEpisode of characterEpisodes
+        | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize"
+      >
         <td>{{ characterEpisode.name }}</td>
         <td>{{ characterEpisode.airDate }}</td>
         <td>{{ characterEpisode.episodeName }}</td>
       </tr>
       </tbody>
     </table>
+    <div class="d-flex justify-content-between p-2">
+      <ngb-pagination
+        [collectionSize]="collectionSize"
+        [(page)]="page"
+        [pageSize]="pageSize"
+        [maxSize]="5"
+        [boundaryLinks]="true"
+      >
+      </ngb-pagination>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>

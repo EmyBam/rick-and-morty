@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResponseMapper } from '../services/response-mapper.service';
-import { Character, CollectionInfo } from '../interfaces/character.interface';
+import { Character } from '../interfaces/character.interface';
 import { CharacterEpisodesComponent } from '../character-episodes/character-episodes';
 import { HttpService } from '../services/http.service';
 
@@ -29,9 +29,9 @@ export class CharactersComponent implements OnInit {
 
   getCollectionInfo(): void {
     this.responseMapper.getCollectionInfo().subscribe(
-      collectionInfo => {
-        this.pageSize = collectionInfo.pageSize;
-        this.collectionSize = collectionInfo.collectionSize;
+      ({pageSize, collectionSize}) => {
+        this.pageSize = pageSize;
+        this.collectionSize = collectionSize;
       }
     );
   }
@@ -48,7 +48,7 @@ export class CharactersComponent implements OnInit {
     modalRef.componentInstance.characterId = id;
   }
 
-  onPageChange(page) {
+  onPageChange(page): void {
     this.page = page;
     this.getCharacters();
   }

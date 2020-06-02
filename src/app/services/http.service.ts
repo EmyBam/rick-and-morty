@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, tap, mergeMap, map } from 'rxjs/operators';
 import { Observable, of, forkJoin } from 'rxjs';
 
-// todo:  create an interface for data I'll set from server.
 // todo: how to handle errors?
 // todo: spinners
 

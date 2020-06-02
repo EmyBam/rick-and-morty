@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from './http.service';
-import {Character, FetchedCharacter, CollectionInfo} from '../interfaces/character.interface';
-import {Episode, EpisodesResponse, FetchedEpisode} from '../interfaces/episode.interface';
-import {map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpService } from './http.service';
+import { Character, FetchedCharacter, CollectionInfo } from '../interfaces/character.interface';
+import { Episode, FetchedEpisode } from '../interfaces/episode.interface';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,10 +31,10 @@ export class ResponseMapper {
 
   getCollectionInfo(): Observable<CollectionInfo> {
     return this.httpService.getCollectionInfo().pipe(
-      map((response) => {
-          const pageSize = response.results.length;
+      map(({results, info}) => {
+          const pageSize = results.length;
           return {
-            collectionSize: response.info.count,
+            collectionSize: info.count,
             pageSize,
           };
         }

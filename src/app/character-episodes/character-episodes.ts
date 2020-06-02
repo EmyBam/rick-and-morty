@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResponseMapper } from '../services/response-mapper.service';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { Episode } from '../interfaces/episode.interface';
 import { Character } from '../interfaces/character.interface';
 
@@ -15,6 +15,9 @@ export class CharacterEpisodesComponent implements OnInit {
   @Input() characterId;
   character: Character;
   characterEpisodes: Episode[];
+  page = 1;
+  pageSize = 5;
+  collectionSize: number;
 
   ngOnInit() {
     this.getCharacterEpisodes();
@@ -32,6 +35,7 @@ export class CharacterEpisodesComponent implements OnInit {
         character.episode.forEach(url => characterEpisodesSet.add(url));
         this.characterEpisodes = allEpisodes.filter(episode => characterEpisodesSet.has(episode.url));
         this.character = character;
+        this.collectionSize = this.characterEpisodes.length;
       });
   }
 
