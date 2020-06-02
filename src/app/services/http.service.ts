@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { CharactersResponse, FetchedCharacter } from '../interfaces/character.interface';
-import { EpisodesResponse, FetchedEpisode } from '../interfaces/episode.interface';
-import { HttpClient } from '@angular/common/http';
-import { catchError, tap, mergeMap, map } from 'rxjs/operators';
-import { Observable, of, forkJoin } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {CharactersResponse, FetchedCharacter} from '../interfaces/character.interface';
+import {EpisodesResponse, FetchedEpisode} from '../interfaces/episode.interface';
+import {HttpClient} from '@angular/common/http';
+import {catchError, tap, mergeMap, map} from 'rxjs/operators';
+import {Observable, of, forkJoin} from 'rxjs';
 
 // todo: how to handle errors?
 // todo: spinners
@@ -14,62 +14,64 @@ import { Observable, of, forkJoin } from 'rxjs';
 })
 export class HttpService {
 
-  constructor(private http: HttpClient) { }
-  private baseUrl = 'https://rickandmortyapi.com/api/';
-
-  getCollectionInfo(): Observable<CharactersResponse> {
-    return this.http.get<CharactersResponse>(`${this.baseUrl}character`).pipe(
-        tap(_ => console.log('fetched collection info')),
-        catchError(this.handleError<CharactersResponse>('getCollectionInfo', )),
-        );
+  constructor(private http: HttpClient) {
   }
 
-  getCharacters(page): Observable<CharactersResponse> {
+  private baseUrl = 'https://rickandmortyapi.com/api/';
+
+  getCharactersInfo(): Observable<CharactersResponse> {
+    return this.http.get<CharactersResponse>(`${this.baseUrl}character`).pipe(
+      tap(_ => console.log('fetched character info')),
+      catchError(this.handleError<CharactersResponse>('getCharactersInfo', )),
+    );
+  }
+
+  getOnePageCharacters(page): Observable<CharactersResponse> {
     return this.http.get<CharactersResponse>(`${this.baseUrl}character?page=${page}`).pipe(
-        tap(_ => console.log('fetched all characters')),
-        catchError(this.handleError<CharactersResponse>('getCharacters', )),
-      );
+      tap(_ => console.log('fetched all characters')),
+      catchError(this.handleError<CharactersResponse>('getCharacters',)),
+    );
   }
 
   getCharacter(id: number): Observable<FetchedCharacter> {
-    return this.http.get<FetchedCharacter>(`${this.baseUrl}character/${id}`)
-      .pipe(
-        tap(_ => console.log('fetched character')),
-        catchError(this.handleError<FetchedCharacter>('getCharacter'))
-      );
+    return this.http.get<FetchedCharacter>(`${this.baseUrl}character/${id}`).pipe(
+      tap(_ => console.log('fetched character')),
+      catchError(this.handleError<FetchedCharacter>('getCharacter'))
+    );
   }
 
-  // searchCharacter(term: string): Observable<Character[]> {
-  //   return this.getCharacters()
-  //     .pipe(
-  //       tap(response => response.length ?
-  //         console.log(`found characters matching "${term}"`) :
-  //         console.log(`no characters matching "${term}"`)),
-  //       catchError(this.handleError<[]>('searchCharacters', []))
-  //     );
-  // }
+  searchCharacter(term: string): Observable<CharactersResponse> {
+    return this.http.get<CharactersResponse>(`${this.baseUrl}character/?name=${term}`).pipe(
+      tap(({results}) => results.length ?
+        console.log(`found characters matching "${term}"`) :
+        console.log(`no characters matching "${term}"`)),
+        catchError(this.handleError<CharactersResponse>('searchCharacters', ))
+      );
+  }
 
   getEpisodes() {
     return this.http.get<EpisodesResponse>(`${this.baseUrl}episode`)
       .pipe(
-        tap(_ => console.log('fetched all episodes')),
-        catchError(this.handleError<EpisodesResponse>('getEpisodes', )),
-        mergeMap(response => {
-            const pageCount = response.info.pages;
+        tap(_ => console.log('fetched episodes info')),
+        catchError(this.handleError<EpisodesResponse>('getEpisodesInfo', )),
+        mergeMap(({info}) => {
+            const pageCount = info.pages;
             const pages = [];
-            for (let i = 1; i <= pageCount; i++) { pages.push(i); }
+            for (let i = 1; i <= pageCount; i++) {
+              pages.push(i);
+            }
             return forkJoin(pages.map(pageIndex =>
-              this.getOnePageEpisode(pageIndex)));
+              this.getOnePageEpisodes(pageIndex)));
           }
         )
       );
   }
 
-  private getOnePageEpisode(pageIndex): Observable<EpisodesResponse> {
+  private getOnePageEpisodes(pageIndex): Observable<EpisodesResponse> {
     return this.http.get<EpisodesResponse>(`${this.baseUrl}episode?page=${pageIndex}`)
       .pipe(
         tap(_ => console.log(`fetched episodes from page ${pageIndex}`)),
-        catchError(this.handleError<EpisodesResponse>('getEpisodes', ))
+        catchError(this.handleError<EpisodesResponse>('getEpisodes',))
       );
   }
 

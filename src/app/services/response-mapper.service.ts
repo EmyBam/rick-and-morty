@@ -2,16 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { Character, FetchedCharacter, CollectionInfo } from '../interfaces/character.interface';
 import { Episode, FetchedEpisode } from '../interfaces/episode.interface';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import {map, tap} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResponseMapper {
 
-  getCharacters(page): Observable<Character[]> {
-    return this.httpService.getCharacters(page)
+  getOnePageCharacters(page): Observable<Character[]> {
+    return this.httpService.getOnePageCharacters(page)
       .pipe(
         map(({results} ) => {
           const characters: Character[] = results.map((fetchedCharacter: FetchedCharacter) => {
@@ -29,8 +29,8 @@ export class ResponseMapper {
       );
   }
 
-  getCollectionInfo(): Observable<CollectionInfo> {
-    return this.httpService.getCollectionInfo().pipe(
+  getCharacterInfo(): Observable<CollectionInfo> {
+    return this.httpService.getCharactersInfo().pipe(
       map(({results, info}) => {
           const pageSize = results.length;
           return {
@@ -54,23 +54,23 @@ export class ResponseMapper {
         }));
   }
 
-  // searchCharacter(term: string) {
-  //   if (!term.trim()) {
-  //     return of([]);
-  //   }
-  //   return this.httpService.searchCharacter(term)
-  //     .pipe(
-  //       map((fetchedCharacters: []) => {
-  //         const formattedResults: [] = this.formatResults(fetchedCharacters);
-  //         const characters: Character[] = formattedResults.map((fetchedCharacter: {}) => {
-  //           return this.createCharacter(fetchedCharacter);
-  //         });
-  //         return characters;
-  //       })
-  //     );
-  // }
+  searchCharacter(term: string) {
+    if (!term.trim()) {
+      return of([]);
+    }
+    return this.httpService.searchCharacter(term)
+      .pipe(
+        map(({results}) => {
+          console.log(results);
+          const characters: Character[] = results.map((fetchedCharacter: FetchedCharacter) => {
+            return this.createCharacter(fetchedCharacter);
+          });
+          return characters;
+        })
+      );
+  }
 
-  private formatResults(fetchedItems): FetchedEpisode[] {
+  private formatResults(fetchedItems): [] {
     const fetchedResults = fetchedItems.map(fetchedItem => fetchedItem.results);
     const formattedResults: [] = fetchedResults.reduce((acc, val) => [...acc, ...val]);
     return formattedResults;

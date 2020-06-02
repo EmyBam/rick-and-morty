@@ -28,7 +28,7 @@ export class CharactersComponent implements OnInit {
   }
 
   getCollectionInfo(): void {
-    this.responseMapper.getCollectionInfo().subscribe(
+    this.responseMapper.getCharacterInfo().subscribe(
       ({pageSize, collectionSize}) => {
         this.pageSize = pageSize;
         this.collectionSize = collectionSize;
@@ -37,7 +37,7 @@ export class CharactersComponent implements OnInit {
   }
 
   getCharacters(): void {
-    this.responseMapper.getCharacters(this.page)
+    this.responseMapper.getOnePageCharacters(this.page)
       .subscribe(characters => {
         this.characters = characters;
       });
