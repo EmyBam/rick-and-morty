@@ -2,20 +2,20 @@ import {Injectable} from '@angular/core';
 import {CharactersResponse, FetchedCharacter} from '../interfaces/character.interface';
 import {EpisodesResponse, FetchedEpisode} from '../interfaces/episode.interface';
 import {HttpClient} from '@angular/common/http';
-import {catchError, tap, mergeMap, map} from 'rxjs/operators';
-import {Observable, of, forkJoin} from 'rxjs';
+import {catchError, tap, mergeMap, map, debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {Observable, of, forkJoin, Subject, BehaviorSubject} from 'rxjs';
 
 // todo: how to handle errors?
+// todo: fix search
 // todo: spinners
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService {
+export class RickAndMortyService {
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   private baseUrl = 'https://rickandmortyapi.com/api/';
 
@@ -29,7 +29,7 @@ export class HttpService {
   getOnePageCharacters(page): Observable<CharactersResponse> {
     return this.http.get<CharactersResponse>(`${this.baseUrl}character?page=${page}`).pipe(
       tap(_ => console.log('fetched all characters')),
-      catchError(this.handleError<CharactersResponse>('getCharacters',)),
+      catchError(this.handleError<CharactersResponse>('getCharacters', )),
     );
   }
 
@@ -42,11 +42,9 @@ export class HttpService {
 
   searchCharacter(term: string): Observable<CharactersResponse> {
     return this.http.get<CharactersResponse>(`${this.baseUrl}character/?name=${term}`).pipe(
-      tap(({results}) => results.length ?
-        console.log(`found characters matching "${term}"`) :
-        console.log(`no characters matching "${term}"`)),
-        catchError(this.handleError<CharactersResponse>('searchCharacters', ))
-      );
+      tap(_ =>  console.log(`found characters matching "${term}"`)),
+      catchError(err => of(undefined))
+    );
   }
 
   getEpisodes() {
@@ -71,13 +69,13 @@ export class HttpService {
     return this.http.get<EpisodesResponse>(`${this.baseUrl}episode?page=${pageIndex}`)
       .pipe(
         tap(_ => console.log(`fetched episodes from page ${pageIndex}`)),
-        catchError(this.handleError<EpisodesResponse>('getEpisodes',))
+        catchError(this.handleError<EpisodesResponse>('getEpisodes', ))
       );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error);
+      console.error(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
   }

@@ -3,7 +3,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResponseMapper } from '../services/response-mapper.service';
 import { Character } from '../interfaces/character.interface';
 import { CharacterEpisodesComponent } from '../character-episodes/character-episodes';
-import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-characters',
@@ -13,7 +12,6 @@ import { HttpService } from '../services/http.service';
 export class CharactersComponent implements OnInit {
 
   constructor(private responseMapper: ResponseMapper,
-              private httpService: HttpService,
               private modalService: NgbModal) {
   }
 

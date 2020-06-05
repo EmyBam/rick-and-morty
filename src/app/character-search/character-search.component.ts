@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {ResponseMapper } from '../services/response-mapper.service';
+import { Observable, of, Subject, throwError } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { ResponseMapper } from '../services/response-mapper.service';
 import { Character } from '../interfaces/character.interface';
 
 @Component({
@@ -11,13 +11,15 @@ import { Character } from '../interfaces/character.interface';
 })
 export class CharacterSearchComponent implements OnInit {
 
-  characters: Observable<Character[]>;
-  private searchTerms = new Subject<string>();
-  
   constructor(private responseMapper: ResponseMapper) {
   }
 
+  characters: Observable<Character[]>;
+  isNoMatching = false;
+  private searchTerms = new Subject<string>();
+
   search(term: string): void {
+    console.log(`Input ${term}`);
     this.searchTerms.next(term);
   }
 
@@ -25,12 +27,12 @@ export class CharacterSearchComponent implements OnInit {
    this.setCharacters();
   }
 
-  setCharacters(): void {
-    this.characters = this.searchTerms
-      .pipe(
+  setCharacters() {
+    this.characters = this.searchTerms.pipe(
         debounceTime(250),
         distinctUntilChanged(),
-        switchMap((term: string) => this.responseMapper.searchCharacter(term)),
+       // catchError(_ => this.isNoMatching = true),
+        switchMap((term: string) => this.responseMapper.searchCharacter(term))
       );
   }
 }

@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
-import { Character, FetchedCharacter, CollectionInfo } from '../interfaces/character.interface';
+import { RickAndMortyService } from './rick-and-morty.service';
+import { Character, FetchedCharacter, CollectionInfo, CharactersResponse } from '../interfaces/character.interface';
 import { Episode, FetchedEpisode } from '../interfaces/episode.interface';
-import {map, tap} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import {catchError, debounceTime, distinctUntilChanged, flatMap, map, switchMap, tap} from 'rxjs/operators';
+import {Observable, of, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResponseMapper {
 
+  constructor(private rickAndMortyService: RickAndMortyService) { }
+
   getOnePageCharacters(page): Observable<Character[]> {
-    return this.httpService.getOnePageCharacters(page)
+    return this.rickAndMortyService.getOnePageCharacters(page)
       .pipe(
         map(({results} ) => {
           const characters: Character[] = results.map((fetchedCharacter: FetchedCharacter) => {
@@ -23,14 +25,14 @@ export class ResponseMapper {
   }
 
   getCharacter(id: number): Observable<Character> {
-    return this.httpService.getCharacter(id)
+    return this.rickAndMortyService.getCharacter(id)
       .pipe(
         map((fetchedCharacter: FetchedCharacter) => this.createCharacter(fetchedCharacter))
       );
   }
 
   getCharacterInfo(): Observable<CollectionInfo> {
-    return this.httpService.getCharactersInfo().pipe(
+    return this.rickAndMortyService.getCharactersInfo().pipe(
       map(({results, info}) => {
           const pageSize = results.length;
           return {
@@ -43,7 +45,7 @@ export class ResponseMapper {
   }
 
   getEpisodes(): Observable<Episode[]> {
-    return this.httpService.getEpisodes()
+    return this.rickAndMortyService.getEpisodes()
       .pipe(
         map(fetchedEpisodes => {
           const formattedResults: FetchedEpisode[] = this.formatResults(fetchedEpisodes);
@@ -54,15 +56,16 @@ export class ResponseMapper {
         }));
   }
 
-  searchCharacter(term: string) {
+  searchCharacter(term: string): Observable<Character[]> {
     if (!term.trim()) {
       return of([]);
     }
-    return this.httpService.searchCharacter(term)
-      .pipe(
-        map(({results}) => {
-          console.log(results);
-          const characters: Character[] = results.map((fetchedCharacter: FetchedCharacter) => {
+    return this.rickAndMortyService.searchCharacter(term).pipe(
+        map((response) => {
+          if (!response) {
+            return [];
+          }
+          const characters: Character[] = response.results.map((fetchedCharacter: FetchedCharacter) => {
             return this.createCharacter(fetchedCharacter);
           });
           return characters;
@@ -100,6 +103,4 @@ export class ResponseMapper {
     };
     return episode;
   }
-
-  constructor(private httpService: HttpService) { }
 }
