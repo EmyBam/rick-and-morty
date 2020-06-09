@@ -3,10 +3,10 @@
   <input #searchBox id="search-box" (input)="search(searchBox.value)"/>
 
   <ul *ngIf="characters" class="search-result">
-    <li *ngIf="isNoMatching">
+    <li *ngIf="!characters.length && term.length">
       No results
     </li>
-    <li *ngFor="let character of characters | async">
+    <li *ngFor="let character of characters">
       <a routerLink="/details/{{character.id}}">
         {{character.name}}
       </a>
