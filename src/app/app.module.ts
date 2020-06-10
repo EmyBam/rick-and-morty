@@ -15,6 +15,7 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { HighlightSearchPipe } from './highlight-search.pipe';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     PageNotFoundComponent,
     HeaderComponent,
     LoadingSpinnerComponent,
+    HighlightSearchPipe,
   ],
   imports: [
     BrowserModule,

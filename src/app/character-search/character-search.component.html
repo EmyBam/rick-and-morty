@@ -1,4 +1,4 @@
-<div id="search-component">
+<div id="search-component" xmlns="http://www.w3.org/1999/html">
   <label for="search-box">Character Search:</label>
   <input #searchBox id="search-box" (input)="search(searchBox.value)"/>
 
@@ -8,7 +8,7 @@
     </li>
     <li *ngFor="let character of characters">
       <a routerLink="/details/{{character.id}}">
-        {{character.name}}
+        <div [innerHTML]="character.name | highlightSearch: term"></div>
       </a>
     </li>
   </ul>

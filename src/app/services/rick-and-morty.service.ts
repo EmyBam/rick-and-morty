@@ -5,8 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, tap, mergeMap, map, debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {Observable, of, forkJoin, Subject, BehaviorSubject} from 'rxjs';
 
-// todo: how to handle errors?
-// todo: fix search
+// todo: errors
 // todo: spinners
 
 
