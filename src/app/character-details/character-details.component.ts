@@ -15,16 +15,24 @@ import { CharacterEpisodesComponent } from '../character-episodes/character-epis
 export class CharacterDetailsComponent implements OnInit {
 
   @Input() character: Character;
+  isLoading = false;
+  error: string = null;
 
   ngOnInit(): void {
     this.getCharacter();
   }
 
   getCharacter(): void {
+    this.isLoading = true;
     const id = +this.route.snapshot.paramMap.get('id');
-    this.responseMapper.getCharacter(id)
-      .subscribe(character => {
+    this.responseMapper.getCharacter(id).subscribe(
+      character => {
+        this.isLoading = false;
         this.character = character;
+      },
+      errorMessage => {
+        this.isLoading = false;
+        this.error = errorMessage;
       });
   }
 

@@ -18,17 +18,21 @@ export class CharacterEpisodesComponent implements OnInit {
   page = 1;
   pageSize = 5;
   collectionSize: number;
+  isLoading = false;
+  error: string = null;
 
   ngOnInit() {
     this.getCharacterEpisodes();
   }
 
   getCharacterEpisodes(): void {
+    this.isLoading = true;
     forkJoin([
       this.responseMapper.getEpisodes(),
       this.responseMapper.getCharacter(this.characterId)
-    ])
-      .subscribe(results => {
+    ]).subscribe(
+      results => {
+        this.isLoading = false;
         const allEpisodes = results[0];
         const character = results[1];
         const characterEpisodesSet = new Set();
@@ -36,6 +40,10 @@ export class CharacterEpisodesComponent implements OnInit {
         this.characterEpisodes = allEpisodes.filter(episode => characterEpisodesSet.has(episode.url));
         this.character = character;
         this.collectionSize = this.characterEpisodes.length;
+      },
+      errorMessage => {
+        this.isLoading = false;
+        this.error = errorMessage;
       });
   }
 

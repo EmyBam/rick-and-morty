@@ -1,13 +1,9 @@
-import {Injectable} from '@angular/core';
-import {CharactersResponse, FetchedCharacter} from '../interfaces/character.interface';
-import {EpisodesResponse, FetchedEpisode} from '../interfaces/episode.interface';
-import {HttpClient} from '@angular/common/http';
-import {catchError, tap, mergeMap, map, debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {Observable, of, forkJoin, Subject, BehaviorSubject} from 'rxjs';
-
-// todo: errors
-// todo: spinners
-
+import { Injectable } from '@angular/core';
+import { CharactersResponse, FetchedCharacter } from '../interfaces/character.interface';
+import { EpisodesResponse } from '../interfaces/episode.interface';
+import { HttpClient } from '@angular/common/http';
+import { catchError, tap, mergeMap } from 'rxjs/operators';
+import { Observable, of, forkJoin, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,21 +17,21 @@ export class RickAndMortyService {
   getCharactersInfo(): Observable<CharactersResponse> {
     return this.http.get<CharactersResponse>(`${this.baseUrl}character`).pipe(
       tap(_ => console.log('fetched character info')),
-      catchError(this.handleError<CharactersResponse>('getCharactersInfo', )),
+      catchError(error => this.handleError('getCharactersInfo', error)),
     );
   }
 
   getOnePageCharacters(page): Observable<CharactersResponse> {
     return this.http.get<CharactersResponse>(`${this.baseUrl}character?page=${page}`).pipe(
       tap(_ => console.log('fetched all characters')),
-      catchError(this.handleError<CharactersResponse>('getCharacters', )),
+      catchError(error => this.handleError('getOnePageCharacters', error)),
     );
   }
 
   getCharacter(id: number): Observable<FetchedCharacter> {
     return this.http.get<FetchedCharacter>(`${this.baseUrl}character/${id}`).pipe(
       tap(_ => console.log('fetched character')),
-      catchError(this.handleError<FetchedCharacter>('getCharacter'))
+      catchError(error => this.handleError('getCharacter', error)),
     );
   }
 
@@ -50,7 +46,7 @@ export class RickAndMortyService {
     return this.http.get<EpisodesResponse>(`${this.baseUrl}episode`)
       .pipe(
         tap(_ => console.log('fetched episodes info')),
-        catchError(this.handleError<EpisodesResponse>('getEpisodesInfo', )),
+        catchError(error => this.handleError('getEpisodes', error)),
         mergeMap(({info}) => {
             const pageCount = info.pages;
             const pages = [];
@@ -68,14 +64,17 @@ export class RickAndMortyService {
     return this.http.get<EpisodesResponse>(`${this.baseUrl}episode?page=${pageIndex}`)
       .pipe(
         tap(_ => console.log(`fetched episodes from page ${pageIndex}`)),
-        catchError(this.handleError<EpisodesResponse>('getEpisodes', ))
+        catchError(error => this.handleError('getOnePageEpisodes', error)),
       );
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(`${operation} failed: ${error.message}`);
-      return of(result as T);
-    };
+  private handleError(operation = 'operation', error) {
+    if (!error.message || !error.error.error ) {
+      const errorMessage = 'An unknown error occurred!';
+      console.error(`${operation} failed: ${errorMessage}`);
+      return throwError(errorMessage);
+    }
+    console.error(`${operation} failed: ${error.message}`);
+    return throwError(error.error.error);
   }
 }

@@ -3,6 +3,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ResponseMapper } from '../services/response-mapper.service';
 import { Character } from '../interfaces/character.interface';
 import { CharacterEpisodesComponent } from '../character-episodes/character-episodes';
+import {catchError, mergeMap, switchMap} from "rxjs/operators";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-characters',
@@ -19,26 +21,32 @@ export class CharactersComponent implements OnInit {
   page = 1;
   pageSize: number;
   collectionSize: number;
+  isLoading = false;
+  error: string = null;
 
   ngOnInit() {
-    this.getCollectionInfo();
     this.getCharacters();
   }
 
-  getCollectionInfo(): void {
-    this.responseMapper.getCharacterInfo().subscribe(
-      ({pageSize, collectionSize}) => {
+  getCharacters(): void {
+    this.isLoading = true;
+    forkJoin([
+      this.responseMapper.getCharacterInfo(),
+      this.responseMapper.getOnePageCharacters(this.page)
+    ]).subscribe(
+      results => {
+        this.isLoading = false;
+        const {pageSize, collectionSize} = results[0];
+        const characters = results[1];
         this.pageSize = pageSize;
         this.collectionSize = collectionSize;
+        this.characters = characters;
+      },
+      errorMessage => {
+        this.isLoading = false;
+        this.error = errorMessage;
       }
     );
-  }
-
-  getCharacters(): void {
-    this.responseMapper.getOnePageCharacters(this.page)
-      .subscribe(characters => {
-        this.characters = characters;
-      });
   }
 
   openModal(id): void {
