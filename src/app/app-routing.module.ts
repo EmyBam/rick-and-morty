@@ -10,22 +10,29 @@ import {LoginGuardService} from './guards/login.guard.service';
 
 const routes: Routes = [
 //  { path: '**', component: PageNotFoundComponent },
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
   {
     path: 'characters',
     component: CharactersComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
+    children: [
+      {
+        path: ':id',
+        component: CharacterDetailsComponent,
+        canActivate: [AuthGuardService],
+        outlet: 'details'
+      }
+    ]
   },
   {
     path: 'login',
     component: UserFormComponent,
-    canActivate: [LoginGuardService]
-  },
-  {
-    path: 'details/:id',
-    component: CharacterDetailsComponent,
-    canActivate: [AuthGuardService]
-  },
+    canActivate: [LoginGuardService],
+  }
 ];
 
 @NgModule({

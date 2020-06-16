@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, OnDestroy} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,28 +12,44 @@ import { CharacterEpisodesComponent } from '../character-episodes/character-epis
   templateUrl: './character-details.component.html',
   styleUrls: ['./character-details.component.scss']
 })
-export class CharacterDetailsComponent implements OnInit {
+export class CharacterDetailsComponent implements OnInit, OnDestroy {
+
+  constructor(
+    private route: ActivatedRoute,
+    private responseMapper: ResponseMapper,
+    private location: Location,
+    private modalService: NgbModal
+  ) { }
 
   @Input() character: Character;
   isLoading = false;
   error: string = null;
+  private id;
+  private sub: any;
 
   ngOnInit(): void {
     this.getCharacter();
   }
 
+  // todo: refactor this
   getCharacter(): void {
     this.isLoading = true;
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.responseMapper.getCharacter(id).subscribe(
-      character => {
-        this.isLoading = false;
-        this.character = character;
-      },
-      errorMessage => {
-        this.isLoading = false;
-        this.error = errorMessage;
-      });
+    this.sub = this.route.params.subscribe(params => {
+      this.id = +params.id;
+      this.responseMapper.getCharacter(this.id).subscribe(
+        character => {
+          this.isLoading = false;
+          this.character = character;
+        },
+        errorMessage => {
+          this.isLoading = false;
+          this.error = errorMessage;
+        });
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   goBack(): void {
@@ -45,10 +61,4 @@ export class CharacterDetailsComponent implements OnInit {
     modalRef.componentInstance.characterId = id;
   }
 
-  constructor(
-    private route: ActivatedRoute,
-    private responseMapper: ResponseMapper,
-    private location: Location,
-    private modalService: NgbModal
-  ) { }
 }
