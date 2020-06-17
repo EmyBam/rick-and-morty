@@ -4,6 +4,9 @@
 <div *ngIf="isLoading" style="text-align: center">
   <app-loading-spinner></app-loading-spinner>
 </div>
+<div *ngIf="!character" style="text-align: center">
+  Please, choose a character
+</div>
 <div *ngIf="character">
   <h3>{{character.name | uppercase}}</h3>
   <img src="{{character.image}}"/>
@@ -13,5 +16,4 @@
   <p class="clickable" (click)="openModal(character.id)">
     {{ character.numberOfEpisodes | number }}
   </p>
-  <button (click)="goBack()">go back</button>
 </div>

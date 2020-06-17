@@ -25,6 +25,12 @@ const routes: Routes = [
         component: CharacterDetailsComponent,
         canActivate: [AuthGuardService],
         outlet: 'details'
+      },
+      {
+        path: '',
+        component: CharacterDetailsComponent,
+        canActivate: [AuthGuardService],
+        outlet: 'details'
       }
     ]
   },
