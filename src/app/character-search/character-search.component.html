@@ -7,7 +7,7 @@
       No results
     </li>
     <li *ngFor="let character of characters">
-      <a routerLink="/details/{{character.id}}">
+      <a [routerLink]="[{ outlets: { details: [character.id] } }]">
         <div [innerHTML]="character.name | highlightSearch: term"></div>
       </a>
     </li>

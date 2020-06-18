@@ -1,3 +1,13 @@
+.search-component {
+  position: relative;
+}
+
+.search-result {
+  position: absolute;
+  background-color: white;
+  z-index: 1;
+}
+
 .search-result li {
   border-bottom: 1px solid gray;
   border-left: 1px solid gray;
