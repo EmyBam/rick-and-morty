@@ -1,15 +1,21 @@
-<div id="search-component" xmlns="http://www.w3.org/1999/html">
-  <label for="search-box">Character Search:</label>
-  <input #searchBox id="search-box" (input)="search(searchBox.value)"/>
-
+<nav class="navbar navbar-dark bg-dark">
+  <form class="form-inline my-2 my-lg-0">
+    <input class="form-control mr-sm-2"
+           type="search"
+           placeholder="Search"
+           aria-label="Search"
+           #searchBox
+           id="search-box"
+           (input)="search(searchBox.value)"/>
+  </form>
   <ul *ngIf="characters" class="search-result">
     <li *ngIf="!characters.length && term.length">
       No results
     </li>
     <li *ngFor="let character of characters">
-      <a [routerLink]="[{ outlets: { details: [character.id] } }]">
+      <a [routerLink]="[{ outlets: { details: [character.id]} }]">
         <div [innerHTML]="character.name | highlightSearch: term"></div>
       </a>
     </li>
   </ul>
-</div>
+</nav>
