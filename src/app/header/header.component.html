@@ -1,13 +1,13 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">{{title}}</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse">
-    <div class="navbar-nav mr-auto">
+    <div *ngIf="isAuthenticated" class="navbar-nav mr-auto">
       <app-character-search></app-character-search>
     </div>
     <button *ngIf="isAuthenticated" class="btn btn-secondary btn-sm" type="submit" (click)="logout()">Log out</button>
   </div>
 </nav>
+

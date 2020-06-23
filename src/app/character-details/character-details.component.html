@@ -1,19 +1,27 @@
 <div class="alert alert-danger" *ngIf="error">
   <p>{{ error }}</p>
 </div>
-<div *ngIf="isLoading" style="text-align: center">
+<div *ngIf="isLoading" class="card text-center">
   <app-loading-spinner></app-loading-spinner>
 </div>
-<div *ngIf="!character" style="text-align: center">
-  Please, choose a character
+<div *ngIf="!character" class="card text-center character-not-selected">
+  <p>Please select a character</p>
 </div>
-<div *ngIf="character">
-  <h3>{{character.name | uppercase}}</h3>
-  <img src="{{character.image}}"/>
-  <p>{{character.status}}</p>
-  <p>{{character.gender}}</p>
-  <p>{{character.origin}}</p>
-  <p class="clickable" (click)="openModal(character.id)">
-    {{ character.numberOfEpisodes | number }}
-  </p>
-</div>
+<article *ngIf="character" class="card mb-3" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{character.image}}" class="card-img" alt="character-image">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{character.name | uppercase}}</h5>
+        <p><i class="fas fa-heart"></i><i class="fas fa-skull"></i><span class="card-text">&nbsp;{{character.status}}</span></p>
+        <p><i class="fas fa-venus"></i><i class="fas fa-mars"></i><span class="card-text">&nbsp;{{character.gender}}</span></p>
+        <p><i class="fas fa-globe"></i><span>&nbsp;{{character.origin}}</span></p>
+        <p class="card-text clickable" (click)="openModal(character.id)">
+          Episodes:&nbsp;{{ character.numberOfEpisodes}}
+        </p>
+      </div>
+    </div>
+  </div>
+</article>

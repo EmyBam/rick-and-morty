@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CharactersComponent } from './characters/characters.component';
 import { CharacterDetailsComponent } from './character-details/character-details.component';
-import { UserFormComponent } from './user-form/user-form.component';
+import { LogInComponent } from './log-in/log-in.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {AuthGuardService} from './guards/auth.guard.service';
 import {LoginGuardService} from './guards/login.guard.service';
@@ -36,7 +36,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: UserFormComponent,
+    component: LogInComponent,
     canActivate: [LoginGuardService],
   }
 ];

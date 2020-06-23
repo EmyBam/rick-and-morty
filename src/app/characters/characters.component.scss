@@ -1,5 +1,6 @@
 .characters {
   padding: 0;
+  background-color: white;
 }
 
 .characters td:hover {
@@ -7,6 +8,7 @@
   background-color: #DDD;
 }
 
-.characters a {
+.characters a, td {
   text-decoration: none;
 }
+

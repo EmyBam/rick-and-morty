@@ -5,10 +5,10 @@ import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  templateUrl: './log-in.component.html',
+  styleUrls: ['./log-in.component.scss']
 })
-export class UserFormComponent {
+export class LogInComponent {
   constructor(private authService: AuthService,
               public router: Router) { }
 
