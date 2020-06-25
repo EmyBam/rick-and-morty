@@ -35,6 +35,12 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'details/:id',
+    component: CharacterDetailsComponent,
+    canActivate: [AuthGuardService],
+    outlet: 'details'
+  },
+  {
     path: 'login',
     component: LogInComponent,
     canActivate: [LoginGuardService],

@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ResponseMapper } from '../services/response-mapper.service';
 import { Character } from '../interfaces/character.interface';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-character-search',
@@ -11,7 +12,9 @@ import { Character } from '../interfaces/character.interface';
 })
 export class CharacterSearchComponent implements OnInit {
 
-  constructor(private responseMapper: ResponseMapper) {
+  constructor(private responseMapper: ResponseMapper,
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   characters: Character[];
@@ -39,3 +42,5 @@ export class CharacterSearchComponent implements OnInit {
     );
   }
 }
+
+

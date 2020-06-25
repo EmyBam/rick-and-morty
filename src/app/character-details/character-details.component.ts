@@ -6,13 +6,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ResponseMapper} from '../services/response-mapper.service';
 import {Character} from '../interfaces/character.interface';
 import {CharacterEpisodesComponent} from '../character-episodes/character-episodes';
-import {catchError, concatMap, switchMap, tap} from 'rxjs/operators';
-import {of, throwError} from 'rxjs';
-
-
-interface Params {
-  id: number;
-}
+import {switchMap} from 'rxjs/operators';
+import {of} from 'rxjs';
 
 @Component({
   selector: 'app-character-details',

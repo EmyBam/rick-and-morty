@@ -23,9 +23,7 @@ h2, h3 {
 p {
   margin: 0 0;
 }
-//body {
-//  margin: 2em;
-//}
+
 body, input[type="text"], button {
   color: #333;
   font-family: Cambria, Georgia;
@@ -40,7 +38,6 @@ body, input[type="text"], button {
   text-decoration: none;
   position: relative;
   display: block;
-  width: 250px;
 }
 
 .clickable:hover {

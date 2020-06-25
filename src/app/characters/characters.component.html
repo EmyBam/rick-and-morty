@@ -1,53 +1,63 @@
-<div style="margin-top: 70px;">
+<div class="container-fluid" style="margin-top: 70px;">
   <div *ngIf="error" class="row">
-    <p class="text-center alert alert-danger" style="margin:auto">{{ error }}</p>
+    <p class="text-center alert alert-danger">{{ error }}</p>
   </div>
   <div *ngIf="isLoading" class="row">
-    <div style="margin:auto">
+    <div>
       <app-loading-spinner></app-loading-spinner>
     </div>
   </div>
   <div *ngIf="characters && !isLoading">
     <div class="row">
-      <div class="d-flex justify-content-between p-2">
-        <ngb-pagination
-          [collectionSize]="collectionSize"
-          [(page)]="page"
-          [pageSize]="pageSize"
-          [maxSize]="5"
-          [boundaryLinks]="true"
-          (pageChange)="onPageChange(page)"
-        >
-        </ngb-pagination>
+      <div class="col-md-3 col-xs-12">
+        <app-character-search></app-character-search>
       </div>
     </div>
     <div class="row">
-      <table class="col-md-8 table table-hover characters">
-        <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Gender</th>
-          <th scope="col">Episodes</th>
-          <th scope="col">Origin</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let character of characters">
-          <a class="clickable" [routerLink]="[{ outlets: { details: [character.id] } }]">
-            <td class="clickable">
-              {{ character.name }}
+      <div class="col-md-8 col-xs-12">
+        <table class="table table-hover characters">
+          <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Episodes</th>
+            <th scope="col">Origin</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let character of characters">
+            <a class="clickable" [routerLink]="[{ outlets: { details: [character.id] } }]">
+              <td class="clickable">
+                {{ character.name }}
+              </td>
+            </a>
+            <td>{{ character.gender }}</td>
+            <td class="clickable" (click)="openModal(character.id)">
+              {{ character.numberOfEpisodes | number }}
             </td>
-          </a>
-          <td>{{ character.gender }}</td>
-          <td class="clickable" (click)="openModal(character.id)">
-            {{ character.numberOfEpisodes | number }}
-          </td>
-          <td>{{ character.origin }}</td>
-        </tr>
-        </tbody>
-      </table>
-      <div class="col-md-4">
+            <td>{{ character.origin }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-4 col-xs-12">
         <router-outlet name="details"></router-outlet>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-xs-12">
+        <div class="d-flex justify-content-between p-2">
+          <ngb-pagination
+            [collectionSize]="collectionSize"
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [maxSize]="5"
+            [boundaryLinks]="true"
+            (pageChange)="onPageChange(page)"
+            size="sm"
+          >
+          </ngb-pagination>
+        </div>
       </div>
     </div>
   </div>

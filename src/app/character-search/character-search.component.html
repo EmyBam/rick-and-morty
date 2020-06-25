@@ -1,21 +1,22 @@
-<nav class="navbar navbar-dark bg-dark">
-  <form class="form-inline my-2 my-lg-0">
-    <input class="form-control mr-sm-2"
-           type="search"
-           placeholder="Search"
-           aria-label="Search"
-           #searchBox
-           id="search-box"
-           (input)="search(searchBox.value)"/>
-  </form>
-  <ul *ngIf="characters" class="search-result">
-    <li *ngIf="!characters.length && term.length">
-      No results
-    </li>
-    <li *ngFor="let character of characters">
-      <a [routerLink]="[{ outlets: { details: [character.id]} }]">
-        <div [innerHTML]="character.name | highlightSearch: term"></div>
-      </a>
-    </li>
-  </ul>
-</nav>
+<div class="search-form">
+  <input class="form-control"
+         type="search"
+         placeholder="Search"
+         aria-label="Search"
+         id="search-box"
+         (input)="search(searchBox.value)"
+         #searchBox
+  />
+</div>
+
+<ul *ngIf="characters" class="search-result">
+  <li *ngIf="!characters.length && term.length">
+    No results
+  </li>
+  <li *ngFor="let character of characters">
+    <a [routerLink]="[{ outlets: { details: [character.id]} }]">
+      <div [innerHTML]="character.name | highlightSearch: term"></div>
+    </a>
+  </li>
+</ul>
+

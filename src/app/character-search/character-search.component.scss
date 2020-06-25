@@ -1,10 +1,11 @@
-.search-component {
-  position: relative;
+.search-form {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .search-result {
   position: absolute;
-  top: 30px;
+  top: 40px;
   background-color: white;
   z-index: 1;
 }
@@ -14,7 +15,6 @@
   border-left: 1px solid gray;
   border-right: 1px solid gray;
   width: 195px;
-//  height: 16px;
   padding: 5px;
   background-color: white;
   cursor: pointer;
@@ -37,11 +37,10 @@
 .search-result li a:active {
   color: white;
 }
-#search-box {
-  width: 200px;
-  height: 20px;
-}
-
+//
+//#search-box {
+//  width: 200px;
+//}
 
 ul.search-result {
   margin-top: 0;
