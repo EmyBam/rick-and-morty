@@ -47,6 +47,7 @@ export class CharacterDetailsComponent implements OnInit, OnDestroy {
         )
       ).subscribe(
         character => {
+          console.log(character);
           this.isLoading = false;
           this.character = character;
         },

@@ -9,16 +9,16 @@
   </div>
   <div *ngIf="characters && !isLoading">
     <div class="row">
-      <div class="col-md-4 col-xs-12">
+      <div class="col-md-3 col-xs-12">
         <app-character-search></app-character-search>
       </div>
     </div>
     <div class="row flex-row-reverse">
-      <div class="col-md-4 col-xs-12">
+      <div class="col-md-3 col-xs-12">
         <router-outlet name="details"></router-outlet>
       </div>
-      <div class="col-md-8 col-xs-12">
-        <table class="table table-hover characters">
+      <div class="col-md-9 col-xs-12">
+        <table class="table table-hover characters-table">
           <thead>
           <tr>
             <th scope="col">Name</th>

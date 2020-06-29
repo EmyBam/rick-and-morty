@@ -1,11 +1,11 @@
-.characters {
+.characters-table {
   padding: 0; }
 
-.characters td:hover {
+.characters-table td:hover {
   color: #607D8B;
   background-color: #DDD; }
 
-.characters a {
+.characters-table a {
   text-decoration: none; }
 
 /*# sourceMappingURL=characters.component.css.map */

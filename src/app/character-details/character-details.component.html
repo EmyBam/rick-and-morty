@@ -7,21 +7,29 @@
 <div *ngIf="!character" class="card text-center character-not-selected">
   <p>Please select a character</p>
 </div>
-<article *ngIf="character" class="card mb-3" style="max-width: 540px;">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="{{character.image}}" class="card-img" alt="character-image">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">{{character.name | uppercase}}</h5>
-        <p><i class="fas fa-heart"></i><i class="fas fa-skull"></i><span class="card-text">&nbsp;{{character.status}}</span></p>
-        <p><i class="fas fa-venus"></i><i class="fas fa-mars"></i><span class="card-text">&nbsp;{{character.gender}}</span></p>
-        <p><i class="fas fa-globe"></i><span>&nbsp;{{character.origin}}</span></p>
-        <p class="card-text clickable" (click)="openModal(character.id)">
-          Episodes:&nbsp;{{ character.numberOfEpisodes}}
-        </p>
+<article *ngIf="character" class="card character-details">
+  <img src="{{character.image}}" class="card-img-top" alt="character-image">
+  <div class="card-body">
+    <h5 class="card-title">{{character.name | uppercase}}</h5>
+    <div class="d-flex align-items-start">
+      <div class="p-2">
+        <i *ngIf="(character.status ==='Alive'); else dead" class="fas fa-heart"></i>
+        <ng-template #dead><i class="fas fa-skull"></i></ng-template>
+        <span class="card-text">&nbsp;{{character.status}}</span>
       </div>
+      <div class="p-2">
+        <i *ngIf="(character.gender === 'Male'); else female" class="fas fa-mars"></i>
+        <ng-template #female><i class="fas fa-venus"></i></ng-template>
+        <span class="card-text">&nbsp;{{character.gender}}</span></div>
+    </div>
+    <div class="p-2">
+      <i class="fas fa-globe"></i>
+      <span>&nbsp;{{character.origin}}</span>
+    </div>
+    <div class="p-2">
+        <span class="card-text clickable" (click)="openModal(character.id)">
+          {{ character.numberOfEpisodes}}&nbsp;episodes
+        </span>
     </div>
   </div>
 </article>
