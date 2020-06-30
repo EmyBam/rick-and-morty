@@ -1,15 +1,20 @@
+@import './../../styles';
+
 .characters-table {
   padding: 0;
-  background-color: white;
+  background-color: $lite-color;
+
+  a, td {
+    text-decoration: none;
+  }
+
+  td:hover {
+    color: $dark-color;
+    background-color: $secondary-bg-color;
+  }
 }
 
-.characters-table td:hover {
-  color: #607D8B;
-  background-color: #DDD;
-}
 
-.characters-table a, td {
-  text-decoration: none;
-}
+
 
 

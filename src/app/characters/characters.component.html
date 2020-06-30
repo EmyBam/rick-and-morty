@@ -1,9 +1,11 @@
 <div class="container-fluid" style="margin-top: 70px;">
   <div *ngIf="error" class="row">
-    <p class="text-center alert alert-danger">{{ error }}</p>
+    <div class="col-md-3 col-xs-12">
+      <p class="text-center alert alert-danger">{{ error }}</p>
+    </div>
   </div>
   <div *ngIf="isLoading" class="row">
-    <div>
+    <div class="col-md-3 col-xs-12">
       <app-loading-spinner></app-loading-spinner>
     </div>
   </div>

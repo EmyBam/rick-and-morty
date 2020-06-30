@@ -8,9 +8,8 @@
          #searchBox
   />
 </div>
-
 <ul *ngIf="characters" class="search-result">
-  <li *ngIf="!characters.length && term.length">
+  <li *ngIf="!characters.length && term.length" class="no-results">
     No results
   </li>
   <li *ngFor="let character of characters">

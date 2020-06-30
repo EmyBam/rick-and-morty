@@ -3,13 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { CharactersComponent } from './characters/characters.component';
 import { CharacterDetailsComponent } from './character-details/character-details.component';
 import { LogInComponent } from './log-in/log-in.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import {AuthGuardService} from './guards/auth.guard.service';
-import {LoginGuardService} from './guards/login.guard.service';
-
+import { AuthGuardService } from './guards/auth.guard.service';
+import { LoginGuardService } from './guards/login.guard.service';
 
 const routes: Routes = [
-//  { path: '**', component: PageNotFoundComponent },
   {
     path: '',
     redirectTo: 'login',
@@ -33,12 +30,6 @@ const routes: Routes = [
         outlet: 'details'
       }
     ]
-  },
-  {
-    path: 'details/:id',
-    component: CharacterDetailsComponent,
-    canActivate: [AuthGuardService],
-    outlet: 'details'
   },
   {
     path: 'login',

@@ -1,50 +1,38 @@
 @import "~bootstrap/scss/bootstrap";
 
+$prime-bg-color: #f5f5f5;
+$secondary-bg-color: #DDD;
+$prime-text-color: #333;
+$highlighted-color: #369;
+$lite-color: #FFFFFF;
+$dark-color: #495057;
+
 html,
 body {
   height: 100%;
 }
 
 body {
-  background-color: #f5f5f5;
-}
-
-h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
-}
-h2, h3 {
-  color: #444;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: lighter;
+  background-color: $prime-bg-color;
 }
 
 p {
   margin: 0 0;
 }
 
-body, input[type="text"], button {
-  color: #333;
-  font-family: Cambria, Georgia;
-}
-* {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 .clickable {
   cursor: pointer;
-  color: #333;
+  color: $prime-text-color;
   text-decoration: none;
   position: relative;
   display: block;
-}
 
-.clickable:hover {
-  color: #607D8B;
+  &:hover {
+    color: $highlighted-color !important;
+  }
 }
 
 .highlighted {
-  color: #369;
+  color: $highlighted-color;
   font-weight: bold;
 }

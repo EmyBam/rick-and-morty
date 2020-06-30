@@ -1,5 +1,5 @@
 <div class="modal-header episodes-header">
-  <h4 *ngIf="character" class="modal-title">{{ character.name | uppercase }} episodes</h4>
+  <h4 *ngIf="character" class="modal-title">{{ character.name | uppercase }} {{'episodes' | uppercase}}</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>

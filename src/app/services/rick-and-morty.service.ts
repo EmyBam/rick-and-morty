@@ -23,7 +23,7 @@ export class RickAndMortyService {
 
   getOnePageCharacters(page): Observable<CharactersResponse> {
     return this.http.get<CharactersResponse>(`${this.baseUrl}character?page=${page}`).pipe(
-      tap(_ => console.log('fetched all characters')),
+      tap(_ => console.log(`fetched characters from ${page} page`)),
       catchError(error => this.handleError('getOnePageCharacters', error)),
     );
   }
