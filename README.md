@@ -2,6 +2,6 @@
 
 See demo of this project here.
 
-User credentials: 
+User credentials: <br/>
 login: User
 password: 123456
