@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ResponseMapper } from '../services/response-mapper.service';
-import { Character } from '../interfaces/character.interface';
-import { CharacterEpisodesComponent } from '../character-episodes/character-episodes';
+import {Component, OnInit} from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ResponseMapper} from '../services/response-mapper.service';
+import {Character} from '../interfaces/character.interface';
+import {CharacterEpisodesComponent} from '../character-episodes/character-episodes';
 import {forkJoin} from 'rxjs';
 
 @Component({
@@ -35,11 +35,9 @@ export class CharactersComponent implements OnInit {
     ]).subscribe(
       results => {
         this.isLoading = false;
-        const {pageSize, collectionSize} = results[0];
-        const characters = results[1];
-        this.pageSize = pageSize;
-        this.collectionSize = collectionSize;
-        this.characters = characters;
+        this.pageSize = results[0].pageSize;
+        this.pageSize = results[0].collectionSize;
+        this.characters = results[1];
       },
       errorMessage => {
         this.isLoading = false;

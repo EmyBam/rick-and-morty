@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { tap, delay } from 'rxjs/operators';
-import { CookieService } from 'ngx-cookie-service';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {tap, delay} from 'rxjs/operators';
+import {CookieService} from 'ngx-cookie-service';
 
 const REGISTERED_USER_CREDENTIALS = {
   username: 'User',

@@ -1,14 +1,14 @@
-<div class="alert alert-danger" *ngIf="error">
-  <p>{{ error }}</p>
+<div *ngIf="error" class="alert alert-danger" >
+  <p>{{error}}</p>
 </div>
-<div *ngIf="isLoading" class="card text-center character-not-selected">
+<div *ngIf="isLoading" class="card text-center card-not-selected">
   <app-loading-spinner></app-loading-spinner>
 </div>
-<div *ngIf="!character" class="card text-center character-not-selected">
+<div *ngIf="!character" class="card text-center card-not-selected">
   <p>Please select a character</p>
 </div>
-<article *ngIf="character" class="card character-details">
-  <img src="{{character.image}}" class="card-img-top" alt="character-image">
+<article *ngIf="character" class="card" style="margin-bottom: 1rem">
+  <img src="{{character.image}}" class="card-img-top" alt="character_image">
   <div class="card-body">
     <h5 class="card-title">{{character.name | uppercase}}</h5>
     <div class="d-flex align-items-start">

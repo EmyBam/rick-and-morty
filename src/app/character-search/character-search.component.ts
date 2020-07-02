@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { ResponseMapper } from '../services/response-mapper.service';
-import { Character } from '../interfaces/character.interface';
+import {Component, OnInit} from '@angular/core';
+import {Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {ResponseMapper} from '../services/response-mapper.service';
+import {Character} from '../interfaces/character.interface';
 
 @Component({
   selector: 'app-character-search',

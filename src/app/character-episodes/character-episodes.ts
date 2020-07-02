@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ResponseMapper } from '../services/response-mapper.service';
-import { forkJoin } from 'rxjs';
-import { Episode } from '../interfaces/episode.interface';
-import { Character } from '../interfaces/character.interface';
+import {Component, OnInit, Input} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {ResponseMapper} from '../services/response-mapper.service';
+import {forkJoin} from 'rxjs';
+import {Episode} from '../interfaces/episode.interface';
+import {Character} from '../interfaces/character.interface';
 
 @Component({
   selector: 'app-episode-details',

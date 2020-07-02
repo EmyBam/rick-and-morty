@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { CharactersResponse, FetchedCharacter } from '../interfaces/character.interface';
-import { EpisodesResponse } from '../interfaces/episode.interface';
-import { HttpClient } from '@angular/common/http';
-import { catchError, tap, mergeMap } from 'rxjs/operators';
-import { Observable, of, forkJoin, throwError } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {CharactersResponse, FetchedCharacter} from '../interfaces/character.interface';
+import {EpisodesResponse} from '../interfaces/episode.interface';
+import {HttpClient} from '@angular/common/http';
+import {catchError, tap, mergeMap} from 'rxjs/operators';
+import {Observable, of, forkJoin, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

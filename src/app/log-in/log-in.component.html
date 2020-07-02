@@ -1,12 +1,12 @@
 <div class="signin-container">
   <div class="form-signin">
-    <div *ngIf="isLoading" style="text-align: center">
+    <div *ngIf="isLoading">
       <app-loading-spinner></app-loading-spinner>
     </div>
     <div *ngIf="error" class="alert alert-danger" >
-      <p>{{ error }}</p>
+      <p>{{error}}</p>
     </div>
-    <form (ngSubmit)="onSubmit(userForm)" *ngIf="!isLoading"
+    <form *ngIf="!isLoading" (ngSubmit)="onSubmit(userForm)"
           #userForm="ngForm"
     >
       <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>

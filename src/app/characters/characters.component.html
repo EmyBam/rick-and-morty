@@ -1,7 +1,7 @@
 <div class="container-fluid" style="margin-top: 70px;">
   <div *ngIf="error" class="row">
     <div class="col-md-3 col-xs-12">
-      <p class="text-center alert alert-danger">{{ error }}</p>
+      <p class="text-center alert alert-danger">{{error}}</p>
     </div>
   </div>
   <div *ngIf="isLoading" class="row">
@@ -33,14 +33,14 @@
           <tr *ngFor="let character of characters">
             <a class="clickable" [routerLink]="[{ outlets: { details: [character.id] } }]">
               <td class="clickable">
-                {{ character.name }}
+                {{character.name}}
               </td>
             </a>
-            <td>{{ character.gender }}</td>
+            <td>{{character.gender}}</td>
             <td class="clickable" (click)="openModal(character.id)">
-              {{ character.numberOfEpisodes | number }}
+              {{character.numberOfEpisodes | number}}
             </td>
-            <td>{{ character.origin }}</td>
+            <td>{{character.origin}}</td>
           </tr>
           </tbody>
         </table>

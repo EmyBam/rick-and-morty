@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { RickAndMortyService } from './rick-and-morty.service';
-import { Character, FetchedCharacter, CollectionInfo } from '../interfaces/character.interface';
-import { Episode, FetchedEpisode } from '../interfaces/episode.interface';
-import { map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {RickAndMortyService} from './rick-and-morty.service';
+import {Character, FetchedCharacter, CollectionInfo} from '../interfaces/character.interface';
+import {Episode, FetchedEpisode} from '../interfaces/episode.interface';
+import {map} from 'rxjs/operators';
+import {Observable, of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

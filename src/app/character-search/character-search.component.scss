@@ -1,4 +1,4 @@
-@import './../../styles';
+@import '../../sass/variables';
 
 .search-form {
   margin-top: 1rem;
@@ -12,6 +12,13 @@
   z-index: 1;
   margin-top: 0;
   padding-left: 0;
+
+  & .no-results {
+    cursor: auto !important;
+    &:hover {
+      color: $lite-color;
+    }
+  }
 
   li {
     border-bottom: 1px solid $dark-color;
@@ -43,9 +50,3 @@
   }
 }
 
-.no-results {
-  cursor: auto !important;
-  &:hover {
-    color: $lite-color;
-  }
-}
