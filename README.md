@@ -1,7 +1,7 @@
 # RickAndMorty
 
-See demo of this project here.
+<p>See demo of this project <a href='https://rick-and-morty-79320.web.app/' target='_blank'>here</a>.</p>
 
-User credentials: 
-login: User
-password: 123456
+<h4>User credentials:</h4>
+<p>login: User</p>
+<p>password: 123456</p>
