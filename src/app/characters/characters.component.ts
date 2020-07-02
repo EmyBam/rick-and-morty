@@ -36,7 +36,7 @@ export class CharactersComponent implements OnInit {
       results => {
         this.isLoading = false;
         this.pageSize = results[0].pageSize;
-        this.pageSize = results[0].collectionSize;
+        this.collectionSize = results[0].collectionSize;
         this.characters = results[1];
       },
       errorMessage => {

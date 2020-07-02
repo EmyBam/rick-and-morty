@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "rick-and-morty-79320": {
+      "hosting": {
+        "rick-and-morty": [
+          "rick-and-morty-79320"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "rick-and-morty-79320"
+  }
+}
