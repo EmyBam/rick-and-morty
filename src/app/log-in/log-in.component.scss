@@ -1,3 +1,5 @@
+@import './../../sass/variables';
+
 .signin-container {
   display: -ms-flexbox;
   display: flex;
@@ -36,6 +38,14 @@
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+  }
+
+  button {
+    background-color: $dark-color !important;
+
+    &:disabled {
+      cursor: auto;
+    }
   }
 }
 

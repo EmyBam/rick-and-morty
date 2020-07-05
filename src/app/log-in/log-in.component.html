@@ -1,12 +1,14 @@
 <div class="signin-container">
   <div class="form-signin">
-    <div *ngIf="isLoading">
-      <app-loading-spinner></app-loading-spinner>
+    <div *ngIf="isLoading" class="card-not-selected" style="background-color: inherit">
+      <div class="mr-auto ml-auto">
+        <app-loading-spinner></app-loading-spinner>
+      </div>
     </div>
     <div *ngIf="error" class="alert alert-danger" >
       <p>{{error}}</p>
     </div>
-    <form *ngIf="!isLoading" (ngSubmit)="onSubmit(userForm)"
+    <form *ngIf="!isLoading && !error" (ngSubmit)="onSubmit(userForm)"
           #userForm="ngForm"
     >
       <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
@@ -32,7 +34,7 @@
           >
       </div>
       <div>
-        <button class="btn btn-lg btn-primary btn-block"
+        <button class="btn btn-lg btn-secondary btn-block"
                 type="submit"
                 [disabled]="!userForm.form.valid"
         >

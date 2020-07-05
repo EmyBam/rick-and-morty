@@ -46,7 +46,7 @@
         </table>
       </div>
     </div>
-    <div class="row">
+    <div *ngIf="(collectionSize > pageSize)" class="row">
       <div class="col-md-4 col-xs-12">
         <div class="d-flex justify-content-between p-2">
           <ngb-pagination

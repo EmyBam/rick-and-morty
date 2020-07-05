@@ -7,8 +7,10 @@
 <div class="alert alert-danger" *ngIf="error">
   <p>{{ error }}</p>
 </div>
-<div *ngIf="isLoading" style="text-align: center">
-  <app-loading-spinner></app-loading-spinner>
+<div *ngIf="isLoading" class="card-not-selected">
+  <div class="mr-auto ml-auto">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
 </div>
 <div *ngIf="characterEpisodes && collectionSize">
   <div class="modal-body">
@@ -31,7 +33,7 @@
       </tr>
       </tbody>
     </table>
-    <div class="d-flex justify-content-between p-2">
+    <div *ngIf="(collectionSize > pageSize)" class="d-flex justify-content-between p-2">
       <ngb-pagination
         [collectionSize]="collectionSize"
         [(page)]="page"
@@ -45,3 +47,4 @@
       <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
     </div>
   </div>
+</div>
