@@ -8,7 +8,7 @@
     <div *ngIf="error" class="alert alert-danger" >
       <p>{{error}}</p>
     </div>
-    <form *ngIf="!isLoading && !error" (ngSubmit)="onSubmit(userForm)"
+    <form *ngIf="!isLoading" (ngSubmit)="onSubmit(userForm)"
           #userForm="ngForm"
     >
       <h1 class="h3 mb-3 font-weight-normal">Please log in</h1>
